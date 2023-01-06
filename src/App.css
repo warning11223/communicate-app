@@ -1,3 +1,4 @@
+/*
 .App {
   text-align: center;
 }
@@ -35,4 +36,16 @@
   to {
     transform: rotate(360deg);
   }
+}
+*/
+.container {
+  display: grid;
+  grid-template-areas:
+  "header header"
+  "nav main";
+  grid-template-rows: 60px 1fr;
+  grid-template-columns: 2fr 10fr;
+  grid-gap: 0px 20px;
+  background-color: #182636;
+  height: 100vh;
 }

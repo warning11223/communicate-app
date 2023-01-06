@@ -1,0 +1,10 @@
+.main {
+    grid-area: main;
+}
+.content {
+    max-width: 1200px;
+    background-color: #182636;
+    margin: 0 auto;
+    height: calc(100vh - 48%);
+
+}

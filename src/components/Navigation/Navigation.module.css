@@ -1,0 +1,15 @@
+.nav {
+    grid-area: nav;
+    background-color: #182636;
+    border: 1px solid #F51A51;
+    padding: 10px;
+}
+.navLink {
+    transition: all .2s linear;
+}
+.navLink.active {
+    color: #F51A51;
+}
+.navLink:hover {
+    color: #F51A51;
+}

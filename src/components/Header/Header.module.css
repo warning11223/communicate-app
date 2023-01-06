@@ -1,0 +1,16 @@
+.header {
+    grid-area: header;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #182636;
+    border: 1px solid #F51A51;
+    padding: 10px;
+
+}
+.headerLogo {
+    position: relative;
+    color: #F51A51;
+    font-weight: 700;
+    font-size: 25px;
+}
