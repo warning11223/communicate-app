@@ -1,24 +1,29 @@
 import React from 'react';
 
 import s from './Profile.module.css'
-import MyPosts from "../MyPosts/MyPosts";
-import Post from "../Post/Post";
+import MyPosts from './MyPosts/MyPosts';
+import {PostType, StoreType} from '../../redux/state';
 
+type ProfileProps = {
+    store: StoreType
+}
 
-const Profile = () => {
+const Profile: React.FC<ProfileProps> = ({store}) => {
+    const state = store.getState();
+
     return (
         <div className={s.main}>
             <div className={s.content}>
-                Main content
+                <div>Main content</div>
                 <div>ava + desc</div>
 
-                <MyPosts />
+                <MyPosts
+                    posts={state.profilePage.posts}
+                    addPost={store.addPost.bind(store)}
+                    updateText={store.updateText.bind(store)}
+                    textarea={state.profilePage.textArea}
+                />
 
-                <Post />
-                <Post />
-                <Post />
-                <Post />
-                <Post />
             </div>
 
         </div>

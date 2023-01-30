@@ -49,3 +49,6 @@
   background-color: #182636;
   height: 100vh;
 }
+.main {
+  grid-area: main;
+}

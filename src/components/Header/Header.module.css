@@ -6,11 +6,26 @@
     background-color: #182636;
     border: 1px solid #F51A51;
     padding: 10px;
-
+    position: relative;
+    overflow: hidden;
+}
+.header::after {
+    content: url("/src/img/snegovik.png");
+    position: absolute;
+    top: -14px;
+    right: -21px;
+    cursor: pointer;
 }
 .headerLogo {
     position: relative;
     color: #F51A51;
     font-weight: 700;
     font-size: 25px;
+}
+.headerLogo::after {
+    content: url("/src/img/shapka.png");
+    position: absolute;
+    top: -8px;
+    right: -9px;
+
 }
