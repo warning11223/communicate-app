@@ -10,7 +10,7 @@ export type MessageType = {
 
 export type PostType = {
     id: number
-    text: string | undefined
+    text: string
 }
 
 export type DialogsPageType = {
@@ -20,7 +20,7 @@ export type DialogsPageType = {
 
 export type ProfilePageType = {
     posts: PostType[]
-    textArea: string | undefined
+    textArea: string
 }
 
 export type StateType = {
@@ -28,13 +28,19 @@ export type StateType = {
     profilePage: ProfilePageType
 }
 
+export type ActionType = {
+    type: 'ADD-POST' | 'UPDATE-TEXT'
+    payload?: any
+}
+
 export type StoreType = {
     _state: StateType
     addPost: () => void
-    updateText: (text: string | undefined) => void
+    updateText: (text: string) => void
     subscribe: (observer: () => void) => void
-    _rerenderEntireTree: () => void
+    _callSubscriber: () => void
     getState: () => StateType
+    dispatch: (action: ActionType) => StateType | undefined
 }
 
 export const store: StoreType = {
@@ -71,23 +77,42 @@ export const store: StoreType = {
             id: new Date().getTime(),
             text: this._state.profilePage.textArea
         };
-        this._state.profilePage.posts.push(newPost)
+        this._state.profilePage.posts = [...this._state.profilePage.posts, newPost]
+        //this._state.profilePage.posts.push(newPost)
         this._state.profilePage.textArea = ''
-        this._rerenderEntireTree()
+        this._callSubscriber()
     },
-    updateText(text: string | undefined) {
+    updateText(text: string) {
         this._state.profilePage.textArea = text
-        this._rerenderEntireTree()
+        this._callSubscriber()
     },
     subscribe(observer) {
-        this._rerenderEntireTree = observer
+        this._callSubscriber = observer
     },
-    _rerenderEntireTree () {
+    _callSubscriber () {
         console.log('State was changed')
     },
     getState() {
         return this._state
     },
+    dispatch(action) {
+        switch (action.type) {
+            case 'ADD-POST':
+                this.addPost();
+                break;
+            case 'UPDATE-TEXT':
+                this.updateText(action.payload)
+                break;
+            default:
+                return this._state
+        }
+    }
 
 
 }
+
+type AddPostActionCreatorType = () => ActionType
+type UpdateTextAreaActionCreateType = (payload: any) => ActionType
+
+export const addPostActionCreator: AddPostActionCreatorType = () => ({type: 'ADD-POST'})
+export const updateTextAreaActionCreate: UpdateTextAreaActionCreateType  = (payload) => ({type: 'UPDATE-TEXT', payload})

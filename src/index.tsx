@@ -13,6 +13,6 @@ const rerenderEntireTree = () => {
     );
 }
 
-rerenderEntireTree();
 
+rerenderEntireTree();
 store.subscribe(rerenderEntireTree)

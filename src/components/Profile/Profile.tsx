@@ -2,7 +2,7 @@ import React from 'react';
 
 import s from './Profile.module.css'
 import MyPosts from './MyPosts/MyPosts';
-import {PostType, StoreType} from '../../redux/state';
+import {StoreType} from '../../redux/state';
 
 type ProfileProps = {
     store: StoreType
@@ -19,8 +19,7 @@ const Profile: React.FC<ProfileProps> = ({store}) => {
 
                 <MyPosts
                     posts={state.profilePage.posts}
-                    addPost={store.addPost.bind(store)}
-                    updateText={store.updateText.bind(store)}
+                    dispatch={store.dispatch.bind(store)}
                     textarea={state.profilePage.textArea}
                 />
 

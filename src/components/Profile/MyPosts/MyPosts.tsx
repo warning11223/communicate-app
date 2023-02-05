@@ -1,27 +1,28 @@
-import React, {ChangeEvent, useRef} from 'react';
-import {PostType} from '../../../redux/state';
+import React, {ChangeEvent} from 'react';
+import {ActionType, addPostActionCreator, PostType, updateTextAreaActionCreate} from '../../../redux/state';
 import Post from './Post/Post';
 
 type MyPostsProps = {
     posts: PostType[]
-    addPost: () => void
-    updateText: (text: string | undefined) => void
-    textarea: string | undefined
+    dispatch: (action: ActionType) => void
+    textarea: string
 }
 
-const MyPosts: React.FC<MyPostsProps> = ({posts, addPost, updateText, textarea}) => {
-    const textAreaRef = useRef<HTMLTextAreaElement>(null)
+const MyPosts: React.FC<MyPostsProps> = ({posts, textarea, dispatch}) => {
+    //const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
     const postsRender = posts.map(item => {
         return <Post key={item.id} text={item.text}/>
     })
 
     const textAreaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        updateText(textAreaRef.current?.value)
+        //dispatch({type: 'UPDATE-TEXT', payload: textAreaRef.current?.value})
+        dispatch(updateTextAreaActionCreate(e.currentTarget.value))
     }
 
     const addPostHandler = () => {
-        addPost()
+        //dispatch({type: 'ADD-POST'})
+        dispatch(addPostActionCreator())
     }
 
     return (
@@ -29,12 +30,10 @@ const MyPosts: React.FC<MyPostsProps> = ({posts, addPost, updateText, textarea})
             <h3>My posts</h3>
             <div>
                 <textarea
-                    ref={textAreaRef}
                     value={textarea}
                     onChange={textAreaHandler}
                     cols={30}
                     rows={10}
-                    autoFocus
                 />
                 <button onClick={addPostHandler}>Add post</button>
             </div>
