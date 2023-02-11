@@ -1,28 +1,30 @@
 import React, {ChangeEvent} from 'react';
-import {ActionType, addPostActionCreator, PostType, updateTextAreaActionCreate} from '../../../redux/state';
+import {ActionsTypes, PostType, } from '../../../redux/state';
 import Post from './Post/Post';
+import {addPostActionCreator, updateTextAreaActionCreate} from '../../../redux/profileReducer';
 
 type MyPostsProps = {
+    addPostHandler: () => void
+    textAreaHandler: (value: string) => void
     posts: PostType[]
-    dispatch: (action: ActionType) => void
     textarea: string
 }
 
-const MyPosts: React.FC<MyPostsProps> = ({posts, textarea, dispatch}) => {
+const MyPosts: React.FC<MyPostsProps> = ({ addPostHandler, textAreaHandler, posts, textarea }) => {
     //const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
-    const postsRender = posts.map(item => {
+    const postsRender = posts.map((item) => {
         return <Post key={item.id} text={item.text}/>
     })
 
-    const textAreaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        //dispatch({type: 'UPDATE-TEXT', payload: textAreaRef.current?.value})
-        dispatch(updateTextAreaActionCreate(e.currentTarget.value))
+    const onChangeTextArea = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        textAreaHandler(e.currentTarget.value)
+        //dispatch(updateTextAreaActionCreate(e.currentTarget.value))
     }
 
-    const addPostHandler = () => {
-        //dispatch({type: 'ADD-POST'})
-        dispatch(addPostActionCreator())
+    const onAddPost = () => {
+        addPostHandler()
+        //dispatch(addPostActionCreator())
     }
 
     return (
@@ -31,11 +33,11 @@ const MyPosts: React.FC<MyPostsProps> = ({posts, textarea, dispatch}) => {
             <div>
                 <textarea
                     value={textarea}
-                    onChange={textAreaHandler}
+                    onChange={onChangeTextArea}
                     cols={30}
                     rows={10}
                 />
-                <button onClick={addPostHandler}>Add post</button>
+                <button onClick={onAddPost}>Add post</button>
             </div>
             <div>
                 {postsRender}

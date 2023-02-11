@@ -1,3 +1,6 @@
+import {addPostActionCreator, profileReducer, updateTextAreaActionCreate} from './profileReducer';
+import {addMessageActionCreator, dialogsReducer, updateMessageActionCreator} from './dialogsReducer';
+
 export type DialogType = {
     id: number
     name: string
@@ -16,6 +19,7 @@ export type PostType = {
 export type DialogsPageType = {
     dialogs: DialogType[]
     messages: MessageType[]
+    messagesInputValue: string
 }
 
 export type ProfilePageType = {
@@ -28,19 +32,13 @@ export type StateType = {
     profilePage: ProfilePageType
 }
 
-export type ActionType = {
-    type: 'ADD-POST' | 'UPDATE-TEXT'
-    payload?: any
-}
-
 export type StoreType = {
     _state: StateType
-    addPost: () => void
-    updateText: (text: string) => void
     subscribe: (observer: () => void) => void
     _callSubscriber: () => void
     getState: () => StateType
-    dispatch: (action: ActionType) => StateType | undefined
+    dispatch: (action: ActionsTypes) => void
+
 }
 
 export const store: StoreType = {
@@ -58,6 +56,7 @@ export const store: StoreType = {
                 {id: 2, name: 'How are you?'},
                 {id: 3, name: 'Bye'},
             ],
+            messagesInputValue: ''
         },
         profilePage: {
             textArea: 'hello world',
@@ -72,20 +71,6 @@ export const store: StoreType = {
 
         }
     },
-    addPost() {
-        const newPost = {
-            id: new Date().getTime(),
-            text: this._state.profilePage.textArea
-        };
-        this._state.profilePage.posts = [...this._state.profilePage.posts, newPost]
-        //this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.textArea = ''
-        this._callSubscriber()
-    },
-    updateText(text: string) {
-        this._state.profilePage.textArea = text
-        this._callSubscriber()
-    },
     subscribe(observer) {
         this._callSubscriber = observer
     },
@@ -96,23 +81,17 @@ export const store: StoreType = {
         return this._state
     },
     dispatch(action) {
-        switch (action.type) {
-            case 'ADD-POST':
-                this.addPost();
-                break;
-            case 'UPDATE-TEXT':
-                this.updateText(action.payload)
-                break;
-            default:
-                return this._state
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+
+        this._callSubscriber();
     }
 
 
 }
 
-type AddPostActionCreatorType = () => ActionType
-type UpdateTextAreaActionCreateType = (payload: any) => ActionType
+export type ActionsTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateTextAreaActionCreate> | ReturnType<typeof updateMessageActionCreator> | ReturnType<typeof addMessageActionCreator>
 
-export const addPostActionCreator: AddPostActionCreatorType = () => ({type: 'ADD-POST'})
-export const updateTextAreaActionCreate: UpdateTextAreaActionCreateType  = (payload) => ({type: 'UPDATE-TEXT', payload})
+
+
+

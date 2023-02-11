@@ -21,5 +21,10 @@ MyPostsStory.args = {
         {id: 5, text: 'post5'},
         {id: 6, text: 'post6'},
     ],
-    dispatch: store.dispatch
+    textAreaHandler(value: string){
+
+    },
+    addPostHandler(){
+
+    },
 }

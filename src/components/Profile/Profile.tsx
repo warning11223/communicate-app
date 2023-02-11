@@ -1,15 +1,13 @@
 import React from 'react';
 
 import s from './Profile.module.css'
-import MyPosts from './MyPosts/MyPosts';
-import {StoreType} from '../../redux/state';
+import MyPostsContainer from './MyPosts/MyPostsContainer';
 
 type ProfileProps = {
-    store: StoreType
+
 }
 
-const Profile: React.FC<ProfileProps> = ({store}) => {
-    const state = store.getState();
+const Profile: React.FC<ProfileProps> = ({}) => {
 
     return (
         <div className={s.main}>
@@ -17,11 +15,7 @@ const Profile: React.FC<ProfileProps> = ({store}) => {
                 <div>Main content</div>
                 <div>ava + desc</div>
 
-                <MyPosts
-                    posts={state.profilePage.posts}
-                    dispatch={store.dispatch.bind(store)}
-                    textarea={state.profilePage.textArea}
-                />
+                <MyPostsContainer />
 
             </div>
 
