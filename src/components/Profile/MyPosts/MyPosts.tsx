@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import {ActionsTypes, PostType, } from '../../../redux/state';
 import Post from './Post/Post';
-import {addPostActionCreator, updateTextAreaActionCreate} from '../../../redux/profileReducer';
+import {addPostActionCreator, updateTextAreaActionCreate} from '../../../reducers/profileReducer';
 
 type MyPostsProps = {
     addPostHandler: () => void

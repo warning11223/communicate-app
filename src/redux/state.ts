@@ -1,5 +1,5 @@
-import {addPostActionCreator, profileReducer, updateTextAreaActionCreate} from './profileReducer';
-import {addMessageActionCreator, dialogsReducer, updateMessageActionCreator} from './dialogsReducer';
+import {addPostActionCreator, profileReducer, updateTextAreaActionCreate} from '../reducers/profileReducer';
+import {addMessageActionCreator, dialogsReducer, updateMessageActionCreator} from '../reducers/dialogsReducer';
 
 export type DialogType = {
     id: number

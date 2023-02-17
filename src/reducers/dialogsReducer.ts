@@ -1,4 +1,4 @@
-import {ActionsTypes, DialogsPageType} from './state';
+import {ActionsTypes, DialogsPageType} from '../redux/state';
 
 const initialState = {
     dialogs: [
@@ -23,16 +23,18 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Ac
                 id: new Date().getTime(),
                 name: state.messagesInputValue
             };
-            state.messages = [...state.messages, newMessage];
-            state.messagesInputValue = '';
-            return state;
+            return {...state, messages: [...state.messages, newMessage], messagesInputValue: ''};
         case 'UPDATE-MESSAGE':
-            state.messagesInputValue = action.payload;
-            return state;
+            return {...state, messagesInputValue: action.payload.message};
         default:
             return state;
     }
 }
 
-export const updateMessageActionCreator = (payload: string) => ({type: 'UPDATE-MESSAGE', payload} as const)
-export const addMessageActionCreator = () => ({type: 'ADD-MESSAGE'} as const)
+export const updateMessageActionCreator = (payload: string) => ({
+    type: 'UPDATE-MESSAGE', payload: { message: payload }
+} as const)
+
+export const addMessageActionCreator = () => ({
+    type: 'ADD-MESSAGE'
+} as const)

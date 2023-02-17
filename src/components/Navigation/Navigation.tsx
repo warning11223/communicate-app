@@ -16,6 +16,9 @@ const Navigation = () => {
                     <Link className={`${s.navLink} ${pathname === '/dialogs' ? `${s.active}` : ''}`}  to='/dialogs'>Dialogs</Link>
                 </li>
                 <li>
+                    <Link className={`${s.navLink} ${pathname === '/users' ? `${s.active}` : ''}`}  to='/users'>Users</Link>
+                </li>
+                <li>
                     <Link className={`${s.navLink} ${pathname === '/news' ? `${s.active}` : ''}`}  to='/news'>News</Link>
                 </li>
                 <li>

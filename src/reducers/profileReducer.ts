@@ -1,4 +1,4 @@
-import {ActionsTypes, ProfilePageType} from './state';
+import {ActionsTypes, ProfilePageType} from '../redux/state';
 
 const initialState = {
     textArea: 'Add post',
@@ -20,16 +20,18 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
                 id: new Date().getTime(),
                 text: state.textArea
             };
-            state.posts = [...state.posts, newPost];
-            state.textArea = '';
-            return state;
+            return {...state, posts: [...state.posts, newPost], textArea: ''};
         case 'UPDATE-TEXT':
-            //state.textArea = action.payload;
-            return {...state, textArea: action.payload};
+            return {...state, textArea: action.payload.text};
         default:
             return state;
     }
 }
 
-export const addPostActionCreator = () => ({type: 'ADD-POST'} as const)
-export const updateTextAreaActionCreate = (payload: string) => ({type: 'UPDATE-TEXT', payload} as const)
+export const addPostActionCreator = () => ({
+    type: 'ADD-POST'
+} as const)
+
+export const updateTextAreaActionCreate = (payload: string) => ({
+    type: 'UPDATE-TEXT', payload: { text: payload }
+} as const)

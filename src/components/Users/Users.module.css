@@ -1,0 +1,58 @@
+.usersContainer {
+    max-width: 800px;
+    margin: 20px 0px 0px 5px;
+}
+.userContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 150px;
+    margin-bottom: 10px;
+}
+.userLeft {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+}
+.userRight {
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+    border: 1px solid gray;
+    padding: 10px;
+    border-radius: 10px;
+    height: 70px;
+    background-color: rgba(245, 26, 81, 0.7);
+
+}
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.userDesc {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+.userBtn {
+    border: none;
+    background-color: #F51A51;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 18px;
+    padding: 10px 30px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transition: all .2s linear;
+}
+.userBtn:hover {
+    background-color: rgba(245, 26, 81, 0.9);
+}
+.userBtn:active {
+    background-color: rgba(245, 26, 81, 0.7);
+    transform: scale(0.9);
+}
