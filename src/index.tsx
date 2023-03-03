@@ -7,7 +7,6 @@ import {BrowserRouter} from 'react-router-dom';
 import {reduxStore} from './redux/reduxStore';
 import {Provider} from 'react-redux';
 
-
 const root = createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
@@ -17,5 +16,11 @@ root.render(
         </BrowserRouter>
     </Provider>
 );
+
+
+
+
+
+
 
 

@@ -4,6 +4,35 @@
 .content {
     max-width: 1200px;
     background-color: #182636;
-    height: 100%
+    height: 100%;
+    padding-top: 20px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 200px;
 
+}
+.avatar {
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    transition: all .2s linear;
+}
+.avatar:hover {
+    transform: rotate(2deg);
+}
+.rightContent {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.spanItem {
+    color: #F51A51;
+}
+.contentItem {
+    cursor: pointer;
+    transition: all .2s linear;
+    max-width: max-content;
+}
+.contentItem:hover {
+    transform: scale(1.05);
+    border-bottom: 1px solid #F51A51;
 }

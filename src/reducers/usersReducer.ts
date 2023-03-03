@@ -1,37 +1,55 @@
-
-type ActionsType = FollowUserACType | UnfollowUserACType | SetUsersACType
+type ActionsType = FollowUserACType | UnfollowUserACType | SetUsersACType | SetCurrentPageType | SetTotalUsersCountType | SetLoadingACType
 
 export type UserType = {
-    id: string
-    avatar: string
-    followed: boolean
     name: string
-    status: string
-    country: string
-    city: string
+    id: number
+    uniqueUrlName: string | null
+    photos: {
+        small: string | null
+        large: string | null
+    },
+    status: string | null
+    followed: boolean
 }
 
-type InitialStateType = {
-    users: UserType[]
+export type UsersStateType = {
+    items: UserType[]
+    error: string | null
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+    isLoading: boolean
 }
 
-const initialState: InitialStateType = {
-    users: [
-        /*{id: '1', avatar: '', followed: false, name: 'Denis', status: 'I like coding', country: 'Ukraine', city: 'Zp'},
-        {id: '2', avatar: '', followed: false, name: 'Denis', status: 'I like coding', country: 'Ukraine', city: 'Zp'},
-        {id: '3', avatar: '', followed: true, name: 'Denis', status: 'I like coding', country: 'Ukraine', city: 'Zp'},
-        {id: '4', avatar: '', followed: true, name: 'Denis', status: 'I like coding', country: 'Ukraine', city: 'Zp'},*/
-    ]
+const initialState: UsersStateType = {
+    items: [],
+    error: '',
+    pageSize: 5,
+    totalUsersCount: 20,
+    currentPage: 1,
+    isLoading: false
 }
 
-export const usersReducer = (state = initialState, action: ActionsType) => {
+export const usersReducer = (state = initialState, action: ActionsType): UsersStateType => {
     switch (action.type) {
         case 'FOLLOW':
-            return {...state, users: state.users.map(item => item.id === action.payload.id ? {...item, followed: true} : item)};
+            return {
+                ...state,
+                items: state.items.map(item => item.id === action.payload.id ? {...item, followed: true} : item)
+            };
         case 'UNFOLLOW':
-            return {...state, users: state.users.map(item => item.id === action.payload.id ? {...item, followed: false} : item)};
+            return {
+                ...state,
+                items: state.items.map(item => item.id === action.payload.id ? {...item, followed: false} : item)
+            };
         case 'SET_USERS':
-            return {...state, users: action.payload.users};
+            return {...state, items: action.payload.users};
+        case 'SET_CURRENT_PAGE':
+            return {...state, currentPage: action.payload.currentPage};
+        case 'SET_TOTAL_USERS_COUNT':
+            return {...state, totalUsersCount: action.payload.count};
+        case 'SET_LOADING':
+            return {...state, isLoading: action.payload.value};
         default:
             return state;
     }
@@ -40,15 +58,30 @@ export const usersReducer = (state = initialState, action: ActionsType) => {
 export type FollowUserACType = ReturnType<typeof followUserAC>;
 export type UnfollowUserACType = ReturnType<typeof unfollowUserAC>;
 export type SetUsersACType = ReturnType<typeof setUsersAC>;
+export type SetCurrentPageType = ReturnType<typeof setCurrentPageAC>;
+export type SetTotalUsersCountType = ReturnType<typeof setTotalUsersCountAC>;
+export type SetLoadingACType = ReturnType<typeof setLoadingAC>;
 
-export const followUserAC = (id: string) => ({
-    type: 'FOLLOW', payload: { id }
+export const followUserAC = (id: number) => ({
+    type: 'FOLLOW', payload: {id}
 } as const);
 
-export const unfollowUserAC = (id: string) => ({
-    type: 'UNFOLLOW', payload: { id }
+export const unfollowUserAC = (id: number) => ({
+    type: 'UNFOLLOW', payload: {id}
 } as const);
 
 export const setUsersAC = (users: UserType[]) => ({
-    type: 'SET_USERS', payload: { users }
+    type: 'SET_USERS', payload: {users}
 } as const);
+
+export const setCurrentPageAC = (currentPage: number) => ({
+    type: 'SET_CURRENT_PAGE', payload: {currentPage}
+} as const)
+
+export const setTotalUsersCountAC = (count: number) => ({
+    type: 'SET_TOTAL_USERS_COUNT', payload: {count}
+} as const)
+
+export const setLoadingAC = (value: boolean) => ({
+    type: 'SET_LOADING', payload: { value }
+} as const)

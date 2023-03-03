@@ -30,13 +30,21 @@ const DialogsContainer: React.FC<DialogsContainerProps> = ({dialogsState, onChan
     )
 };
 
-const mapStateToProps = (state: RootState) => {
+type MapStateToPropsType = {
+    dialogsState: DialogsPageType
+}
+type MapDispatchToPropsType = {
+    onChangeTextareaHandler: (value: string) => void
+    addMessageHandler: () => void
+}
+
+const mapStateToProps = (state: RootState): MapStateToPropsType => {
     return {
         dialogsState: state.dialogsReducer,
     }
 }
 
-const mapDispatchToProps = (dispatch: AppDispatch) => {
+const mapDispatchToProps = (dispatch: AppDispatch): MapDispatchToPropsType => {
     return {
         onChangeTextareaHandler: (value: string) => dispatch(updateMessageActionCreator(value)),
         addMessageHandler: () => dispatch(addMessageActionCreator()),

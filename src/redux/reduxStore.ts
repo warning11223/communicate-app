@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
     usersReducer,
 })
 
-export type RootState = ReturnType<typeof reduxStore.getState>
+export type RootState = ReturnType<typeof rootReducer>
 export type AppDispatch = typeof reduxStore.dispatch
 
 

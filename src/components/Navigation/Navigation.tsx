@@ -10,7 +10,7 @@ const Navigation = () => {
         <div className={s.nav}>
             <ul>
                 <li>
-                    <Link className={`${s.navLink} ${pathname === '/' ? `${s.active}` : ''}`} to='/'>Profile</Link>
+                    <Link className={`${s.navLink} ${pathname === '/' ? `${s.active}` : ''}`} to='/profile'>Profile</Link>
                 </li>
                 <li>
                     <Link className={`${s.navLink} ${pathname === '/dialogs' ? `${s.active}` : ''}`}  to='/dialogs'>Dialogs</Link>
