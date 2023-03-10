@@ -1,4 +1,4 @@
-type ActionsType = FollowUserACType | UnfollowUserACType | SetUsersACType | SetCurrentPageType | SetTotalUsersCountType | SetLoadingACType
+type ActionsType = FollowUserACType | UnfollowUserACType | SetUsersACType | SetCurrentPageType | SetTotalUsersCountType | SetLoadingACType | SetFollowingUserType;
 
 export type UserType = {
     name: string
@@ -19,6 +19,7 @@ export type UsersStateType = {
     totalUsersCount: number
     currentPage: number
     isLoading: boolean
+    followingInProgress: number[]
 }
 
 const initialState: UsersStateType = {
@@ -27,7 +28,8 @@ const initialState: UsersStateType = {
     pageSize: 5,
     totalUsersCount: 20,
     currentPage: 1,
-    isLoading: false
+    isLoading: false,
+    followingInProgress: [],
 }
 
 export const usersReducer = (state = initialState, action: ActionsType): UsersStateType => {
@@ -50,6 +52,8 @@ export const usersReducer = (state = initialState, action: ActionsType): UsersSt
             return {...state, totalUsersCount: action.payload.count};
         case 'SET_LOADING':
             return {...state, isLoading: action.payload.value};
+        case 'SET_FOLLOWING':
+            return {...state, followingInProgress: action.payload.value ? [...state.followingInProgress, action.payload.id] : state.followingInProgress.filter(item => item !== action.payload.id)}
         default:
             return state;
     }
@@ -61,6 +65,7 @@ export type SetUsersACType = ReturnType<typeof setUsersAC>;
 export type SetCurrentPageType = ReturnType<typeof setCurrentPageAC>;
 export type SetTotalUsersCountType = ReturnType<typeof setTotalUsersCountAC>;
 export type SetLoadingACType = ReturnType<typeof setLoadingAC>;
+export type SetFollowingUserType = ReturnType<typeof setFollowingUserAC>;
 
 export const followUserAC = (id: number) => ({
     type: 'FOLLOW', payload: {id}
@@ -84,4 +89,8 @@ export const setTotalUsersCountAC = (count: number) => ({
 
 export const setLoadingAC = (value: boolean) => ({
     type: 'SET_LOADING', payload: { value }
+} as const)
+
+export const setFollowingUserAC = (value: boolean, id: number) => ({
+    type: 'SET_FOLLOWING', payload: { value, id }
 } as const)

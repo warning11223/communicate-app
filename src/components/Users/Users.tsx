@@ -4,7 +4,8 @@ import user_avatar from '../../img/user-avatar.png'
 
 import s from './Users.module.css'
 import Preloader from '../Preloader/Preloader';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import {followUserAPI, unFollowUserAPI} from '../../api/api';
 
 type UsersPropsType = {
     users: UserType[]
@@ -15,6 +16,8 @@ type UsersPropsType = {
     currentPage: number
     pageSize: number
     loading: boolean
+    setFollowingUser: (value: boolean, id: number) => void
+    followingInProgress: number[]
 }
 
 const Users: React.FC<UsersPropsType> = ({
@@ -25,7 +28,9 @@ const Users: React.FC<UsersPropsType> = ({
                                              unFollowUser,
                                              followUser,
                                              setCurrentPageHandler,
-                                             loading
+                                             loading,
+                                             setFollowingUser,
+                                             followingInProgress
                                          }) => {
     let usersNumbers: number[] = [];
     const pagesCount = Math.ceil(totalUsersCount / pageSize);
@@ -48,6 +53,31 @@ const Users: React.FC<UsersPropsType> = ({
             {loading
                 ? <Preloader/>
                 : users.map(item => {
+                    const followUserHandler = (id: number) => {
+                        setFollowingUser(true, id);
+
+                        followUserAPI(id)
+                            .then(response => {
+                                if (response.resultCode === 0) {
+                                    followUser(id);
+                                }
+                                setFollowingUser(false, id);
+                            })
+
+                    }
+
+                    const unFollowUserHandler = (id: number) => {
+                        setFollowingUser(true, id);
+
+                        unFollowUserAPI(id)
+                            .then(response => {
+                                if (response.resultCode === 0) {
+                                    unFollowUser(id);
+                                }
+                                setFollowingUser(false, id);
+                            })
+                    }
+                    
                     return (
                         <div key={item.id} className={s.userContainer}>
                             <div className={s.userLeft}>
@@ -61,10 +91,16 @@ const Users: React.FC<UsersPropsType> = ({
                                     />
                                 </Link>
                                 {item.followed
-                                    ? <button className={s.userBtn}
-                                              onClick={() => unFollowUser(item.id)}>Unfollow</button>
-                                    : <button className={s.userBtn}
-                                              onClick={() => followUser(item.id)}>Follow</button>
+                                    ? <button
+                                        className={s.userBtn}
+                                        onClick={() => unFollowUserHandler(item.id)}
+                                        disabled={followingInProgress.some(id => id === item.id)}
+                                    >Unfollow</button>
+                                    : <button
+                                        className={s.userBtn}
+                                        onClick={() => followUserHandler(item.id)}
+                                        disabled={followingInProgress.some(id => id === item.id)}
+                                    >Follow</button>
                                 }
                             </div>
                             <div className={s.userRight}>

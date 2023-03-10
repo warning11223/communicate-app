@@ -56,6 +56,11 @@
     background-color: rgba(245, 26, 81, 0.7);
     transform: scale(0.9);
 }
+.userBtn:disabled {
+    cursor: not-allowed;
+    background: gray;
+    opacity: 0.5;
+}
 .activePage {
     color: #F51A51;
     font-weight: 700;

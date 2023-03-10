@@ -1,14 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 
 import s from './Header.module.css'
+import {InitialAuthStateType} from '../../reducers/authReducer';
 
-const Header = () => {
+type HeaderType = {
+    authData: InitialAuthStateType
+}
+
+const Header: React.FC<HeaderType> = ({authData}) => {
     return (
         <div className={s.header}>
-            <Link to='/' className={s.headerLogo}>
+            <Link to="/" className={s.headerLogo}>
                 Social network
             </Link>
+            <div>
+                <span className={s.login}>
+                    {
+                        authData.isAuth
+                            ? authData.email
+                            : <NavLink to="/login">Login</NavLink>
+                    }
+                </span>
+            </div>
         </div>
     );
 };
