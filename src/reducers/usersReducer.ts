@@ -94,3 +94,4 @@ export const setLoadingAC = (value: boolean) => ({
 export const setFollowingUserAC = (value: boolean, id: number) => ({
     type: 'SET_FOLLOWING', payload: { value, id }
 } as const)
+

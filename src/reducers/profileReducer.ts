@@ -1,4 +1,6 @@
 import {PostType, ProfilePageType} from '../redux/state';
+import {getUserProfile, GetUserProfileType} from '../api/api';
+import {AppDispatch} from '../redux/reduxStore';
 
 const initialState = {
     isLoading: false,
@@ -98,10 +100,13 @@ export const updateTextAreaActionCreate = (payload: string) => ({
     type: 'UPDATE-TEXT', payload: { text: payload }
 } as const)
 
-export const updateUserProfile = (userResponse: ProfileResponseType) => ({
+export const updateUserProfile = (userResponse: GetUserProfileType) => ({
     type: 'UPDATE_USER_PROFILE', payload: { userResponse }
 } as const)
 
 export const setLoading = (value: boolean) => ({
     type: 'SET_LOADING', payload: { value }
 } as const)
+
+
+

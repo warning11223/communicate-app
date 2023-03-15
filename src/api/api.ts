@@ -10,6 +10,29 @@ const instance = axios.create({
     }
 });
 
+export type GetUserProfileType = {
+    aboutMe: string
+    contacts: {
+        facebook: string
+        website: string
+        vk: string
+        twitter: string
+        instagram: string
+        youtube:  string
+        github: string
+        mainLink: string
+
+    }
+    fullName: string
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    photos: {
+        small: string
+        large: string
+    }
+    userId: number
+}
+
 export const getUsersAPI = (count = 5, page = 1) => {
     return instance.get<UsersResponseType>(`users?count=${count}&page=${page}`)
         .then(response => response.data)
@@ -28,4 +51,9 @@ export const unFollowUserAPI = (id: number) => {
 export const getAuthMeAPI = () => {
     return instance.get<GetAuthType>('auth/me')
         .then(response => response.data.data)
+}
+
+export const getUserProfile = (id: string = '11') => {
+    return instance.get<GetUserProfileType>(`profile/${id}`)
+        .then(response => response)
 }

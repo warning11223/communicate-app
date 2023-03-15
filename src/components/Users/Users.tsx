@@ -9,8 +9,6 @@ import {followUserAPI, unFollowUserAPI} from '../../api/api';
 
 type UsersPropsType = {
     users: UserType[]
-    followUser: (id: number) => void
-    unFollowUser: (id: number) => void
     setCurrentPageHandler: (index: number) => void
     totalUsersCount: number
     currentPage: number
@@ -18,6 +16,8 @@ type UsersPropsType = {
     loading: boolean
     setFollowingUser: (value: boolean, id: number) => void
     followingInProgress: number[]
+    followUserThunk: (id: number) => void
+    unFollowUserThunk: (id: number) => void
 }
 
 const Users: React.FC<UsersPropsType> = ({
@@ -25,12 +25,11 @@ const Users: React.FC<UsersPropsType> = ({
                                              users,
                                              currentPage,
                                              pageSize,
-                                             unFollowUser,
-                                             followUser,
                                              setCurrentPageHandler,
                                              loading,
-                                             setFollowingUser,
-                                             followingInProgress
+                                             followingInProgress,
+                                             followUserThunk,
+                                             unFollowUserThunk
                                          }) => {
     let usersNumbers: number[] = [];
     const pagesCount = Math.ceil(totalUsersCount / pageSize);
@@ -54,30 +53,13 @@ const Users: React.FC<UsersPropsType> = ({
                 ? <Preloader/>
                 : users.map(item => {
                     const followUserHandler = (id: number) => {
-                        setFollowingUser(true, id);
-
-                        followUserAPI(id)
-                            .then(response => {
-                                if (response.resultCode === 0) {
-                                    followUser(id);
-                                }
-                                setFollowingUser(false, id);
-                            })
-
+                        followUserThunk(id)
                     }
 
                     const unFollowUserHandler = (id: number) => {
-                        setFollowingUser(true, id);
-
-                        unFollowUserAPI(id)
-                            .then(response => {
-                                if (response.resultCode === 0) {
-                                    unFollowUser(id);
-                                }
-                                setFollowingUser(false, id);
-                            })
+                        unFollowUserThunk(id);
                     }
-                    
+
                     return (
                         <div key={item.id} className={s.userContainer}>
                             <div className={s.userLeft}>
