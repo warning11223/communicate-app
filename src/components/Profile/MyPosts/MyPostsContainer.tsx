@@ -1,6 +1,6 @@
 import React from 'react';
 import MyPosts from './MyPosts';
-import {addPostActionCreator, updateTextAreaActionCreate} from '../../../reducers/profileReducer';
+import {addPostAC, updateTextAreaAC} from '../../../reducers/profileReducer';
 import {AppDispatch, RootState} from '../../../redux/reduxStore';
 import {connect} from 'react-redux';
 import {PostType} from '../../../redux/state';
@@ -49,8 +49,8 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = (dispatch: AppDispatch) => {
     return {
-        textAreaHandler: (value: string) => dispatch(updateTextAreaActionCreate(value)),
-        addPostHandler: () => dispatch(addPostActionCreator())
+        textAreaHandler: (value: string) => dispatch(updateTextAreaAC(value)),
+        addPostHandler: () => dispatch(addPostAC())
     }
 }
 

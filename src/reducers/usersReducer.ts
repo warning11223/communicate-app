@@ -8,7 +8,7 @@ export type UserType = {
         small: string | null
         large: string | null
     },
-    status: string | null
+    status: string
     followed: boolean
 }
 
@@ -53,7 +53,7 @@ export const usersReducer = (state = initialState, action: ActionsType): UsersSt
         case 'SET_LOADING':
             return {...state, isLoading: action.payload.value};
         case 'SET_FOLLOWING':
-            return {...state, followingInProgress: action.payload.value ? [...state.followingInProgress, action.payload.id] : state.followingInProgress.filter(item => item !== action.payload.id)}
+            return {...state, followingInProgress: action.payload.value ? [...state.followingInProgress, action.payload.id] : state.followingInProgress.filter(item => item !== action.payload.id)};
         default:
             return state;
     }
@@ -94,4 +94,3 @@ export const setLoadingAC = (value: boolean) => ({
 export const setFollowingUserAC = (value: boolean, id: number) => ({
     type: 'SET_FOLLOWING', payload: { value, id }
 } as const)
-

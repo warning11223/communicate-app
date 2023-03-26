@@ -32,9 +32,10 @@ const Dialogs: React.FC<DialogsProps> = ({state, onChangeTextareaHandler, addMes
                 {messagesRender}
                 <div>
                     <textarea
+                        className={s.textarea}
                         cols={25}
                         rows={5}
-                        placeholder='Add message'
+                        placeholder='Add new message...'
                         value={state.messagesInputValue}
                         onChange={onChangeTextarea}
                     />

@@ -1,5 +1,5 @@
 import {addMessageActionCreator, dialogsReducer, updateMessageActionCreator} from '../reducers/dialogsReducer';
-import {addPostActionCreator} from '../reducers/profileReducer';
+import {addPostAC} from '../reducers/profileReducer';
 
 test('message should be added', () => {
     const initialState = {

@@ -4,7 +4,8 @@ import {addMessageActionCreator, updateMessageActionCreator} from '../../reducer
 import {connect} from 'react-redux';
 import {AppDispatch, RootState} from '../../redux/reduxStore';
 import {DialogsPageType} from '../../redux/state';
-import {Redirect} from 'react-router-dom';
+import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+import {compose} from 'redux';
 
 type DialogsContainerProps = {
     dialogsState: DialogsPageType
@@ -17,12 +18,7 @@ const DialogsContainer: React.FC<DialogsContainerProps> = ({
                                                                dialogsState,
                                                                onChangeTextareaHandler,
                                                                addMessageHandler,
-                                                               isAuth
                                                            }) => {
-    if (!isAuth) {
-        return <Redirect to="/"/>
-    }
-
     return (
         <Dialogs state={dialogsState} onChangeTextareaHandler={onChangeTextareaHandler}
                  addMessageHandler={addMessageHandler}/>
@@ -31,7 +27,6 @@ const DialogsContainer: React.FC<DialogsContainerProps> = ({
 
 type MapStateToPropsType = {
     dialogsState: DialogsPageType
-    isAuth: boolean | null
 }
 type MapDispatchToPropsType = {
     onChangeTextareaHandler: (value: string) => void
@@ -41,7 +36,6 @@ type MapDispatchToPropsType = {
 const mapStateToProps = (state: RootState): MapStateToPropsType => {
     return {
         dialogsState: state.dialogsReducer,
-        isAuth: state.authReducer.isAuth
     }
 }
 
@@ -52,4 +46,8 @@ const mapDispatchToProps = (dispatch: AppDispatch): MapDispatchToPropsType => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DialogsContainer);
+//export default withAuthRedirect(connect(mapStateToProps, mapDispatchToProps)(DialogsContainer));
+export default compose<React.ComponentType>(
+    withAuthRedirect,
+    connect(mapStateToProps, mapDispatchToProps)
+)(DialogsContainer)

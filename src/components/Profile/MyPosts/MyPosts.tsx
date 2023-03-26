@@ -1,7 +1,8 @@
 import React, {ChangeEvent} from 'react';
-import {ActionsTypes, PostType, } from '../../../redux/state';
+import {PostType,} from '../../../redux/state';
 import Post from './Post/Post';
-import {addPostActionCreator, updateTextAreaActionCreate} from '../../../reducers/profileReducer';
+
+import s from './MyPosts.module.css'
 
 type MyPostsProps = {
     addPostHandler: () => void
@@ -32,10 +33,12 @@ const MyPosts: React.FC<MyPostsProps> = ({ addPostHandler, textAreaHandler, post
             <h3>My posts</h3>
             <div>
                 <textarea
+                    className={s.textarea}
                     value={textarea}
                     onChange={onChangeTextArea}
                     cols={30}
                     rows={10}
+                    placeholder='Add new post...'
                 />
                 <button onClick={onAddPost}>Add post</button>
             </div>

@@ -13,7 +13,7 @@ const initialState = {
         {id: 2, name: 'How are you?'},
         {id: 3, name: 'Bye'},
     ],
-    messagesInputValue: 'Add dialog'
+    messagesInputValue: ''
 };
 
 export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsTypes) => {

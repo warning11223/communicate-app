@@ -1,10 +1,9 @@
-import {PostType, ProfilePageType} from '../redux/state';
-import {getUserProfile, GetUserProfileType} from '../api/api';
-import {AppDispatch} from '../redux/reduxStore';
+import {PostType} from '../redux/state';
+import {GetUserProfileType} from '../api/api';
 
 const initialState = {
     isLoading: false,
-    textArea: 'Add post',
+    textArea: '',
     posts: [
         {id: 1, text: 'post1'},
         {id: 2, text: 'post2'},
@@ -31,7 +30,8 @@ const initialState = {
     photos: {
         small: "",
         large: ""
-    }
+    },
+    status: ''
 };
 
 export interface Contacts {
@@ -56,7 +56,7 @@ export interface ProfileResponseType {
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
-    userId: number
+    userId: number | string
     photos: Photos
 }
 
@@ -64,9 +64,10 @@ export type ProfileStateType = ProfileResponseType & {
     textArea: string
     posts: PostType[]
     isLoading: boolean
+    status: string
 }
 
-type ActionsType = UpdateTextAreaActionCreateType | UpdateUserProfileType | AddPostActionCreatorType | SetLoadingType;
+type ActionsType = UpdateTextAreaActionCreateType | UpdateUserProfileType | AddPostActionCreatorType | SetLoadingType | GetStatusType | SetStatusType;
 
 export const profileReducer = (state: ProfileStateType = initialState, action: ActionsType): ProfileStateType => {
     switch (action.type) {
@@ -81,32 +82,43 @@ export const profileReducer = (state: ProfileStateType = initialState, action: A
         case 'UPDATE_USER_PROFILE':
             return {...state, ...action.payload.userResponse};
         case 'SET_LOADING':
-            return {...state, isLoading: action.payload.value}
+            return {...state, isLoading: action.payload.value};
+        case 'GET_STATUS':
+            return {...state, status: action.payload.status};
+        case 'SET_STATUS':
+            return {...state, status: action.payload.status};
         default:
             return state;
     }
 }
 
-export type UpdateUserProfileType = ReturnType<typeof updateUserProfile>;
-export type UpdateTextAreaActionCreateType = ReturnType<typeof updateTextAreaActionCreate>;
-export type AddPostActionCreatorType = ReturnType<typeof addPostActionCreator>;
-export type SetLoadingType = ReturnType<typeof setLoading>;
+export type UpdateUserProfileType = ReturnType<typeof updateUserProfileAC>;
+export type UpdateTextAreaActionCreateType = ReturnType<typeof updateTextAreaAC>;
+export type AddPostActionCreatorType = ReturnType<typeof addPostAC>;
+export type SetLoadingType = ReturnType<typeof setLoadingAC>;
+export type GetStatusType = ReturnType<typeof getStatusAC>;
+export type SetStatusType = ReturnType<typeof setStatusAC>;
 
-export const addPostActionCreator = () => ({
+export const addPostAC = () => ({
     type: 'ADD-POST'
 } as const)
 
-export const updateTextAreaActionCreate = (payload: string) => ({
+export const updateTextAreaAC = (payload: string) => ({
     type: 'UPDATE-TEXT', payload: { text: payload }
 } as const)
 
-export const updateUserProfile = (userResponse: GetUserProfileType) => ({
+export const updateUserProfileAC = (userResponse: GetUserProfileType) => ({
     type: 'UPDATE_USER_PROFILE', payload: { userResponse }
 } as const)
 
-export const setLoading = (value: boolean) => ({
+export const setLoadingAC = (value: boolean) => ({
     type: 'SET_LOADING', payload: { value }
 } as const)
 
+export const getStatusAC = (status: string) => ({
+    type: 'GET_STATUS', payload: { status }
+} as const)
 
-
+export const setStatusAC = (status: string) => ({
+    type: 'SET_STATUS', payload: { status }
+} as const)

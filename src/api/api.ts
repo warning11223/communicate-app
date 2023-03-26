@@ -33,6 +33,12 @@ export type GetUserProfileType = {
     userId: number
 }
 
+export type ResponseType<D> = {
+    resultCode: number
+    messages: string[]
+    data: D
+}
+
 export const getUsersAPI = (count = 5, page = 1) => {
     return instance.get<UsersResponseType>(`users?count=${count}&page=${page}`)
         .then(response => response.data)
@@ -53,7 +59,19 @@ export const getAuthMeAPI = () => {
         .then(response => response.data.data)
 }
 
-export const getUserProfile = (id: string = '11') => {
+export const getUserProfileAPI = (id: string = '23955') => {
     return instance.get<GetUserProfileType>(`profile/${id}`)
         .then(response => response)
+}
+
+export const getUserStatusAPI = (userId: string | number = '23955') => {
+    return instance.get(`profile/status/${userId}`)
+        .then(response => response.data)
+}
+
+export const setUserStatusAPI = (status: string) => {
+    return instance.put<ResponseType<{}>>(`profile/status`, {
+        status
+    })
+        .then(response => response.data)
 }

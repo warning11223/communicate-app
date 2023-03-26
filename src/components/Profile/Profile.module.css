@@ -22,17 +22,7 @@
 .rightContent {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 5px;
-}
-.spanItem {
-    color: #F51A51;
-}
-.contentItem {
-    cursor: pointer;
-    transition: all .2s linear;
-    max-width: max-content;
-}
-.contentItem:hover {
-    transform: scale(1.05);
-    border-bottom: 1px solid #F51A51;
+    max-height: 32%;
 }

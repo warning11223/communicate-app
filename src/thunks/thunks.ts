@@ -1,25 +1,33 @@
 import {AppDispatch} from '../redux/reduxStore';
-import {followUserAPI, getAuthMeAPI, getUserProfile, getUsersAPI, unFollowUserAPI} from '../api/api';
-import {setLoading, updateUserProfile} from '../reducers/profileReducer';
+import {
+    followUserAPI,
+    getAuthMeAPI,
+    getUserProfileAPI,
+    getUsersAPI,
+    getUserStatusAPI,
+    setUserStatusAPI,
+    unFollowUserAPI
+} from '../api/api';
+import {getStatusAC, setLoadingAC, setStatusAC, updateUserProfileAC} from '../reducers/profileReducer';
 import {followUserAC, setFollowingUserAC, setUsersAC, unfollowUserAC} from '../reducers/usersReducer';
 import {authAC} from '../reducers/authReducer';
 
 export const getUserProfileThunk = (id: string) => (dispatch: AppDispatch) => {
-    dispatch(setLoading(true));
-    getUserProfile(id)
+    dispatch(setLoadingAC(true));
+    getUserProfileAPI(id)
         .then(response => {
-            dispatch(setLoading(false));
-            dispatch(updateUserProfile(response.data));
+            dispatch(setLoadingAC(false));
+            dispatch(updateUserProfileAC(response.data));
         })
 }
 
 export const getUsersThunk = (pageSize: number, index: number) => (dispatch: AppDispatch) => {
-    dispatch(setLoading(true));
+    dispatch(setLoadingAC(true));
 
     getUsersAPI(pageSize, index + 1)
         .then(response => {
             dispatch(setUsersAC(response.items));
-            dispatch(setLoading(false));
+            dispatch(setLoadingAC(false));
         });
 }
 
@@ -48,15 +56,37 @@ export const unFollowUserThunk = (id: number) => (dispatch: AppDispatch) => {
 }
 
 export const getAuthMeThunk = () => (dispatch: AppDispatch) => {
-    dispatch(setLoading(true));
+    dispatch(setLoadingAC(true));
 
     getAuthMeAPI()
         .then(response => {
-            dispatch(setLoading(false));
+            dispatch(setLoadingAC(false));
             const {id, email, login} = response;
 
             if (email && id && login) {
                 dispatch(authAC(email, id, login));
+            }
+        })
+}
+
+export const getUserStatusThunk = (userId: string | number) => (dispatch: AppDispatch) => {
+    dispatch(setLoadingAC(true));
+
+    getUserStatusAPI(userId)
+        .then(response => {
+            dispatch(setLoadingAC(false));
+            dispatch(getStatusAC(response));
+        })
+}
+
+export const setUserStatusThunk = (status: string) => (dispatch: AppDispatch) => {
+    dispatch(setLoadingAC(true));
+
+    setUserStatusAPI(status)
+        .then(response => {
+            dispatch(setLoadingAC(false));
+            if (response.resultCode === 0) {
+                dispatch(setStatusAC(status));
             }
         })
 }
