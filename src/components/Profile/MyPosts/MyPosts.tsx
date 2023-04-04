@@ -2,9 +2,8 @@ import React from 'react';
 import {PostType,} from '../../../redux/state';
 import Post from './Post/Post';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
-
-import s from './MyPosts.module.css'
 import {maxLength, minLength, required, Textarea} from '../../common/FormControls/FormControls';
+import {Button} from '../../common/Button/Button';
 
 type MyPostsProps = {
     addPostHandler: (post: string) => void
@@ -55,15 +54,7 @@ const AddPostForm = (props: InjectedFormProps<FormDataType>) => {
             </div>
 
             <div>
-                <div className={s.wrapper}>
-                    <button className={s.button} type="submit">
-                        Add
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                </div>
+                <Button>Add post</Button>
             </div>
         </form>
     )

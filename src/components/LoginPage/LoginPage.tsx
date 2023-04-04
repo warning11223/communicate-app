@@ -3,6 +3,11 @@ import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 
 import s from './LoginPage.module.css'
 import {Input, maxLength, minLength, required} from '../common/FormControls/FormControls';
+import {useDispatch, useSelector} from 'react-redux';
+import {loginTC} from '../../reducers/authReducer';
+import {Redirect} from 'react-router-dom';
+import {RootState} from '../../redux/reduxStore';
+import {Button} from '../common/Button/Button';
 
 type FormDataType = {
     login: string
@@ -10,11 +15,12 @@ type FormDataType = {
     rememberMe: boolean
 }
 
-const maxLength15 = maxLength(15);
+const maxLength30 = maxLength(30);
 const minLength2 = minLength(2)
-const minLength6 = minLength(6)
+const minLength3 = minLength(3)
 
 let LoginForm = (props: InjectedFormProps<FormDataType>) => {
+
     const {handleSubmit} = props;
 
     return (
@@ -24,8 +30,8 @@ let LoginForm = (props: InjectedFormProps<FormDataType>) => {
                     name="login"
                     component={Input}
                     type="text"
-                    label='Login'
-                    validate={[required, maxLength15, minLength2]}
+                    label="Login"
+                    validate={[required, maxLength30, minLength2]}
                 />
             </div>
             <div>
@@ -33,27 +39,19 @@ let LoginForm = (props: InjectedFormProps<FormDataType>) => {
                     name="password"
                     component={Input}
                     type="password"
-                    label='Password'
+                    label="Password"
                     className={s.input}
-                    validate={[required, maxLength15, minLength6]}
+                    validate={[required, maxLength30, minLength3]}
                 />
             </div>
             <div style={{display: 'flex', gap: 10}}>
                 <label htmlFor="rememberMe">Remember me</label>
-                <Field name="rememberMe" component="input" type="checkbox" />
+                <Field name="rememberMe" component="input" type="checkbox"/>
+            </div>
+            <div>
+                <Button>Submit</Button>
             </div>
 
-            <div>
-                <div className={s.wrapper}>
-                    <button className={s.button} type="submit">
-                        Submit
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                </div>
-            </div>
         </form>
     )
 }
@@ -63,8 +61,15 @@ const LoginReduxForm = reduxForm<FormDataType, {}>({
 })(LoginForm)
 
 const LoginPage = () => {
+    const dispatch = useDispatch();
+    const isAuth = useSelector((state: RootState) => state.authReducer.isAuth)
+
     const onSubmit = (formData: FormDataType) => {
-        console.log(formData);
+        dispatch(loginTC(formData.login, formData.password, formData.rememberMe))
+    }
+
+    if (isAuth) {
+        return <Redirect to="/"/>
     }
 
     return (

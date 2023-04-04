@@ -75,3 +75,17 @@ export const setUserStatusAPI = (status: string) => {
     })
         .then(response => response.data)
 }
+
+export const loginAPI = (email: string, password: string, rememberMe: boolean) => {
+    return instance.post<ResponseType<{ userId: number }>>('auth/login', {
+        email,
+        password,
+        rememberMe
+    })
+        .then(response => response.data)
+}
+
+export const logoutAPI = () => {
+    return instance.delete<ResponseType<{}>>('auth/login')
+        .then(res => res.data)
+}

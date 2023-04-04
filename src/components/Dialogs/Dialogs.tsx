@@ -7,6 +7,7 @@ import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 
 import s from './Dialogs.module.css'
 import {maxLength, minLength, required, Textarea} from '../common/FormControls/FormControls';
+import {Button} from '../common/Button/Button';
 
 type DialogsProps = {
     state: DialogsPageType
@@ -56,15 +57,7 @@ let AddMessageForm = (props: InjectedFormProps<FormDataType>) => {
             </div>
 
             <div>
-                <div className={s.wrapper}>
-                    <button className={s.button} type="submit">
-                        Add
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                </div>
+               <Button>Add message</Button>
             </div>
 
         </form>
