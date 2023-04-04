@@ -1,6 +1,6 @@
 import React from 'react';
 import MyPosts from './MyPosts';
-import {addPostAC, updateTextAreaAC} from '../../../reducers/profileReducer';
+import {addPostAC} from '../../../reducers/profileReducer';
 import {AppDispatch, RootState} from '../../../redux/reduxStore';
 import {connect} from 'react-redux';
 import {PostType} from '../../../redux/state';
@@ -8,31 +8,22 @@ import {PostType} from '../../../redux/state';
 type MyPostsContainerProps = {
     posts: PostType[]
     textarea: string
-    textAreaHandler: (value: string) => void
-    addPostHandler: () => void
+    addPostHandler: (post: string) => void
 }
 
-const MyPostsContainer: React.FC<MyPostsContainerProps> = ({ posts, textarea, addPostHandler, textAreaHandler }) => {
+type MapStateToPropsType = {
+    posts: PostType[]
+    textarea: string
+}
+
+type MapDispatchToPropsType = {
+    addPostHandler: (post: string) => void
+}
+
+const MyPostsContainer: React.FC<MyPostsContainerProps> = ({ posts, textarea, addPostHandler }) => {
 
     return (
-       /* <StoreContext.Consumer>
-            {
-                store => {
-                    const textAreaHandler = (value: string) => {
-                        store.dispatch(updateTextAreaActionCreate(value))
-                    }
-                    const addPostHandler = () => {
-                        store.dispatch(addPostActionCreator())
-                    }
-                    const state = store.getState();
-
-                    return <MyPosts textAreaHandler={textAreaHandler} addPostHandler={addPostHandler}
-                                    posts={state.profileReducer.posts} textarea={state.profileReducer.textArea}/>
-                }
-            }
-        </StoreContext.Consumer>*/
         <MyPosts
-            textAreaHandler={textAreaHandler}
             addPostHandler={addPostHandler}
             posts={posts}
             textarea={textarea}
@@ -40,17 +31,16 @@ const MyPostsContainer: React.FC<MyPostsContainerProps> = ({ posts, textarea, ad
     )
 };
 
-const mapStateToProps = (state: RootState) => {
+const mapStateToProps = (state: RootState): MapStateToPropsType => {
     return {
         posts: state.profileReducer.posts,
         textarea: state.profileReducer.textArea,
     }
 }
 
-const mapDispatchToProps = (dispatch: AppDispatch) => {
+const mapDispatchToProps = (dispatch: AppDispatch): MapDispatchToPropsType => {
     return {
-        textAreaHandler: (value: string) => dispatch(updateTextAreaAC(value)),
-        addPostHandler: () => dispatch(addPostAC())
+        addPostHandler: (post: string) => dispatch(addPostAC(post))
     }
 }
 

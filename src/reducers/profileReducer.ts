@@ -74,7 +74,7 @@ export const profileReducer = (state: ProfileStateType = initialState, action: A
         case 'ADD-POST':
             const newPost = {
                 id: new Date().getTime(),
-                text: state.textArea
+                text: action.post
             };
             return {...state, posts: [...state.posts, newPost], textArea: ''};
         case 'UPDATE-TEXT':
@@ -99,8 +99,8 @@ export type SetLoadingType = ReturnType<typeof setLoadingAC>;
 export type GetStatusType = ReturnType<typeof getStatusAC>;
 export type SetStatusType = ReturnType<typeof setStatusAC>;
 
-export const addPostAC = () => ({
-    type: 'ADD-POST'
+export const addPostAC = (post: string) => ({
+    type: 'ADD-POST', post
 } as const)
 
 export const updateTextAreaAC = (payload: string) => ({

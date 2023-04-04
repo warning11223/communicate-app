@@ -1,5 +1,5 @@
-import {addPostAC, profileReducer, updateTextAreaAC} from '../reducers/profileReducer';
-import {addMessageActionCreator, dialogsReducer, updateMessageActionCreator} from '../reducers/dialogsReducer';
+import {addPostAC, updateTextAreaAC} from '../reducers/profileReducer';
+import {addMessageActionCreator, dialogsReducer} from '../reducers/dialogsReducer';
 
 export type DialogType = {
     id: number
@@ -90,7 +90,7 @@ export const store: StoreType = {
 
 }
 
-export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof updateTextAreaAC> | ReturnType<typeof updateMessageActionCreator> | ReturnType<typeof addMessageActionCreator>
+export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof updateTextAreaAC> | ReturnType<typeof addMessageActionCreator>
 
 
 

@@ -21,20 +21,15 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Ac
         case 'ADD-MESSAGE':
             const newMessage = {
                 id: new Date().getTime(),
-                name: state.messagesInputValue
+                name: action.message
             };
             return {...state, messages: [...state.messages, newMessage], messagesInputValue: ''};
-        case 'UPDATE-MESSAGE':
-            return {...state, messagesInputValue: action.payload.message};
         default:
             return state;
     }
 }
 
-export const updateMessageActionCreator = (payload: string) => ({
-    type: 'UPDATE-MESSAGE', payload: { message: payload }
-} as const)
-
-export const addMessageActionCreator = () => ({
-    type: 'ADD-MESSAGE'
+export const addMessageActionCreator = (message: string) => ({
+    type: 'ADD-MESSAGE',
+    message
 } as const)

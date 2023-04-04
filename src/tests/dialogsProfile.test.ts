@@ -1,5 +1,4 @@
-import {addMessageActionCreator, dialogsReducer, updateMessageActionCreator} from '../reducers/dialogsReducer';
-import {addPostAC} from '../reducers/profileReducer';
+import {addMessageActionCreator, dialogsReducer} from '../reducers/dialogsReducer';
 
 test('message should be added', () => {
     const initialState = {
@@ -18,12 +17,12 @@ test('message should be added', () => {
         messagesInputValue: 'Add dialog'
     };
 
-    const newState = dialogsReducer(initialState, addMessageActionCreator())
+    const newState = dialogsReducer(initialState, addMessageActionCreator('hello'))
 
     expect(newState.messages.length).toBe(4)
 })
 
-test('input should be updated', () => {
+/*test('input should be updated', () => {
     const initialState = {
         dialogs: [
             {id: 1, name: 'Name 1'},
@@ -43,4 +42,4 @@ test('input should be updated', () => {
     const newState = dialogsReducer(initialState, updateMessageActionCreator('hello'))
 
     expect(newState.messagesInputValue).toBe('hello')
-})
+})*/

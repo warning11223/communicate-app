@@ -1,6 +1,6 @@
 import React from 'react';
 import Dialogs from './Dialogs';
-import {addMessageActionCreator, updateMessageActionCreator} from '../../reducers/dialogsReducer';
+import {addMessageActionCreator} from '../../reducers/dialogsReducer';
 import {connect} from 'react-redux';
 import {AppDispatch, RootState} from '../../redux/reduxStore';
 import {DialogsPageType} from '../../redux/state';
@@ -9,18 +9,16 @@ import {compose} from 'redux';
 
 type DialogsContainerProps = {
     dialogsState: DialogsPageType
-    onChangeTextareaHandler: (value: string) => void
     addMessageHandler: () => void
     isAuth: boolean | null
 }
 
 const DialogsContainer: React.FC<DialogsContainerProps> = ({
                                                                dialogsState,
-                                                               onChangeTextareaHandler,
                                                                addMessageHandler,
                                                            }) => {
     return (
-        <Dialogs state={dialogsState} onChangeTextareaHandler={onChangeTextareaHandler}
+        <Dialogs state={dialogsState}
                  addMessageHandler={addMessageHandler}/>
     )
 };
@@ -29,8 +27,7 @@ type MapStateToPropsType = {
     dialogsState: DialogsPageType
 }
 type MapDispatchToPropsType = {
-    onChangeTextareaHandler: (value: string) => void
-    addMessageHandler: () => void
+    addMessageHandler: (message: string) => void
 }
 
 const mapStateToProps = (state: RootState): MapStateToPropsType => {
@@ -41,8 +38,7 @@ const mapStateToProps = (state: RootState): MapStateToPropsType => {
 
 const mapDispatchToProps = (dispatch: AppDispatch): MapDispatchToPropsType => {
     return {
-        onChangeTextareaHandler: (value: string) => dispatch(updateMessageActionCreator(value)),
-        addMessageHandler: () => dispatch(addMessageActionCreator()),
+        addMessageHandler: (message: string) => dispatch(addMessageActionCreator(message)),
     }
 }
 

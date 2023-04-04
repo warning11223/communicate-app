@@ -5,7 +5,7 @@ import MyPostsContainer from './MyPosts/MyPostsContainer';
 import {ProfileStateType} from '../../reducers/profileReducer';
 
 import image from '../../img/user-avatar.png'
-import Preloader from '../Preloader/Preloader';
+import Preloader from '../common/Preloader/Preloader';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import ProfileStatus from './ProfileStatus/ProfileStatus';
 
