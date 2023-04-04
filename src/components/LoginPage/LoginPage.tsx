@@ -2,12 +2,17 @@ import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 
 import s from './LoginPage.module.css'
+import {Input, maxLength, minLength, required} from '../common/FormControls/FormControls';
 
 type FormDataType = {
     login: string
     password: string
     rememberMe: boolean
 }
+
+const maxLength15 = maxLength(15);
+const minLength2 = minLength(2)
+const minLength6 = minLength(6)
 
 let LoginForm = (props: InjectedFormProps<FormDataType>) => {
     const {handleSubmit} = props;
@@ -17,19 +22,20 @@ let LoginForm = (props: InjectedFormProps<FormDataType>) => {
             <div>
                 <Field
                     name="login"
-                    component="input"
+                    component={Input}
                     type="text"
-                    placeholder='Login'
-                    className={s.input}
+                    label='Login'
+                    validate={[required, maxLength15, minLength2]}
                 />
             </div>
             <div>
                 <Field
                     name="password"
-                    component="input"
+                    component={Input}
                     type="password"
-                    placeholder='Password'
+                    label='Password'
                     className={s.input}
+                    validate={[required, maxLength15, minLength6]}
                 />
             </div>
             <div style={{display: 'flex', gap: 10}}>
