@@ -9,6 +9,7 @@ export const minLength = (min: number) => (value: string) => value && value.leng
 
 const Element = (Element: string | React.FC): React.FC<RenderFieldPropsType> => ({ input, meta, ...props }) => {
     const hasError = meta.touched && meta.error;
+    console.log(meta.error)
     return (
         <div>
             <Element

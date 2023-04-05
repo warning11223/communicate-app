@@ -1,4 +1,4 @@
-import {ActionsTypes, DialogsPageType} from '../redux/state';
+import {DialogsReducerActionsType, DialogsPageType} from '../redux/state';
 
 const initialState = {
     dialogs: [
@@ -16,7 +16,7 @@ const initialState = {
     messagesInputValue: ''
 };
 
-export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsTypes) => {
+export const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsReducerActionsType) => {
     switch (action.type) {
         case 'ADD-MESSAGE':
             const newMessage = {

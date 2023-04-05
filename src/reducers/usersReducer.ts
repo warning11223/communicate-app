@@ -1,4 +1,4 @@
-type ActionsType = FollowUserACType | UnfollowUserACType | SetUsersACType | SetCurrentPageType | SetTotalUsersCountType | SetLoadingACType | SetFollowingUserType;
+export type UsersReducerActionsType = FollowUserACType | UnfollowUserACType | SetUsersACType | SetCurrentPageType | SetTotalUsersCountType | SetLoadingACType | SetFollowingUserType;
 
 export type UserType = {
     name: string
@@ -32,7 +32,7 @@ const initialState: UsersStateType = {
     followingInProgress: [],
 }
 
-export const usersReducer = (state = initialState, action: ActionsType): UsersStateType => {
+export const usersReducer = (state = initialState, action: UsersReducerActionsType): UsersStateType => {
     switch (action.type) {
         case 'FOLLOW':
             return {

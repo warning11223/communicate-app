@@ -20,7 +20,6 @@ const minLength2 = minLength(2)
 const minLength3 = minLength(3)
 
 let LoginForm = (props: InjectedFormProps<FormDataType>) => {
-
     const {handleSubmit} = props;
 
     return (
@@ -51,7 +50,9 @@ let LoginForm = (props: InjectedFormProps<FormDataType>) => {
             <div>
                 <Button>Submit</Button>
             </div>
-
+            {
+                props.error && <span style={{color: 'red'}}>{props.error}</span>
+            }
         </form>
     )
 }

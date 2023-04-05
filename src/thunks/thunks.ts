@@ -1,4 +1,4 @@
-import {AppDispatch} from '../redux/reduxStore';
+import {AppDispatch, AppThunk} from '../redux/reduxStore';
 import {
     followUserAPI,
     getAuthMeAPI,
@@ -12,7 +12,7 @@ import {getStatusAC, setLoadingAC, setStatusAC, updateUserProfileAC} from '../re
 import {followUserAC, setFollowingUserAC, setUsersAC, unfollowUserAC} from '../reducers/usersReducer';
 import {authAC} from '../reducers/authReducer';
 
-export const getUserProfileThunk = (id: string) => (dispatch: AppDispatch) => {
+export const getUserProfileThunk = (id: string): AppThunk => dispatch => {
     dispatch(setLoadingAC(true));
     getUserProfileAPI(id)
         .then(response => {
@@ -21,7 +21,7 @@ export const getUserProfileThunk = (id: string) => (dispatch: AppDispatch) => {
         })
 }
 
-export const getUsersThunk = (pageSize: number, index: number) => (dispatch: AppDispatch) => {
+export const getUsersThunk = (pageSize: number, index: number): AppThunk => dispatch => {
     dispatch(setLoadingAC(true));
 
     getUsersAPI(pageSize, index + 1)
@@ -31,7 +31,7 @@ export const getUsersThunk = (pageSize: number, index: number) => (dispatch: App
         });
 }
 
-export const followUserThunk = (id: number) => (dispatch: AppDispatch) => {
+export const followUserThunk = (id: number): AppThunk => dispatch => {
     dispatch(setFollowingUserAC(true, id));
 
     followUserAPI(id)
@@ -43,7 +43,7 @@ export const followUserThunk = (id: number) => (dispatch: AppDispatch) => {
         })
 }
 
-export const unFollowUserThunk = (id: number) => (dispatch: AppDispatch) => {
+export const unFollowUserThunk = (id: number): AppThunk => dispatch => {
     dispatch(setFollowingUserAC(true, id));
 
     unFollowUserAPI(id)
@@ -55,7 +55,7 @@ export const unFollowUserThunk = (id: number) => (dispatch: AppDispatch) => {
         })
 }
 
-export const getAuthMeThunk = () => (dispatch: AppDispatch) => {
+export const getAuthMeThunk = (): AppThunk => dispatch => {
     dispatch(setLoadingAC(true));
 
     getAuthMeAPI()
@@ -69,7 +69,7 @@ export const getAuthMeThunk = () => (dispatch: AppDispatch) => {
         })
 }
 
-export const getUserStatusThunk = (userId: string | number) => (dispatch: AppDispatch) => {
+export const getUserStatusThunk = (userId: string | number): AppThunk => dispatch => {
     dispatch(setLoadingAC(true));
 
     getUserStatusAPI(userId)
@@ -79,7 +79,7 @@ export const getUserStatusThunk = (userId: string | number) => (dispatch: AppDis
         })
 }
 
-export const setUserStatusThunk = (status: string) => (dispatch: AppDispatch) => {
+export const setUserStatusThunk = (status: string): AppThunk => dispatch => {
     dispatch(setLoadingAC(true));
 
     setUserStatusAPI(status)

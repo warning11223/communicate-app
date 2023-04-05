@@ -67,9 +67,9 @@ export type ProfileStateType = ProfileResponseType & {
     status: string
 }
 
-type ActionsType = UpdateTextAreaActionCreateType | UpdateUserProfileType | AddPostActionCreatorType | SetLoadingType | GetStatusType | SetStatusType;
+export type ProfileReducerActionsType = UpdateTextAreaActionCreateType | UpdateUserProfileType | AddPostActionCreatorType | SetLoadingType | GetStatusType | SetStatusType;
 
-export const profileReducer = (state: ProfileStateType = initialState, action: ActionsType): ProfileStateType => {
+export const profileReducer = (state: ProfileStateType = initialState, action: ProfileReducerActionsType): ProfileStateType => {
     switch (action.type) {
         case 'ADD-POST':
             const newPost = {

@@ -37,7 +37,7 @@ export type StoreType = {
     subscribe: (observer: () => void) => void
     _callSubscriber: () => void
     getState: () => StateType
-    dispatch: (action: ActionsTypes) => void
+    dispatch: (action: DialogsReducerActionsType) => void
 
 }
 
@@ -90,7 +90,7 @@ export const store: StoreType = {
 
 }
 
-export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof updateTextAreaAC> | ReturnType<typeof addMessageActionCreator>
+export type DialogsReducerActionsType = ReturnType<typeof addPostAC> | ReturnType<typeof updateTextAreaAC> | ReturnType<typeof addMessageActionCreator>
 
 
 
