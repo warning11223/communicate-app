@@ -12,9 +12,7 @@ const root = createRoot(document.getElementById('root') as HTMLElement);
 root.render(
     <Provider store={reduxStore}>
         <BrowserRouter>
-            <App/>
+            <App />
         </BrowserRouter>
     </Provider>
 );
-
-

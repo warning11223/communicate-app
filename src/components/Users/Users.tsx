@@ -5,7 +5,6 @@ import user_avatar from '../../img/user-avatar.png'
 import s from './Users.module.css'
 import Preloader from '../common/Preloader/Preloader';
 import {Link} from 'react-router-dom';
-import {followUserAPI, unFollowUserAPI} from '../../api/api';
 
 type UsersPropsType = {
     users: UserType[]

@@ -4,6 +4,7 @@ import {RootState} from '../../redux/reduxStore';
 import {authAC, InitialAuthStateType} from '../../reducers/authReducer';
 import {connect} from 'react-redux';
 import {getAuthMeThunk} from '../../thunks/thunks';
+import {getAuthData} from './header-selectors';
 
 export type GetAuthType = {
     data: InitialAuthStateType
@@ -12,15 +13,9 @@ export type GetAuthType = {
 type HeaderContainerType = {
     authAC: (email: string, id: number, login: string) => void
     authData: InitialAuthStateType
-    getAuthMeThunk: () => void
 }
 
 class HeaderContainer extends React.Component<HeaderContainerType> {
-
-    componentDidMount() {
-        this.props.getAuthMeThunk();
-    }
-
     render() {
         return <Header authData={this.props.authData}/>
     }
@@ -28,7 +23,7 @@ class HeaderContainer extends React.Component<HeaderContainerType> {
 
 const mapStateToProps = (state: RootState) => {
     return {
-        authData: state.authReducer
+        authData: getAuthData(state)
     }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {DialogsPageType} from '../../redux/state';
+import {DialogType, MessageType} from '../../redux/state';
 
 import DialogsItem from './DialogsItem/DialogsItem';
 import Message from './Message/Message';
@@ -10,16 +10,17 @@ import {maxLength, minLength, required, Textarea} from '../common/FormControls/F
 import {Button} from '../common/Button/Button';
 
 type DialogsProps = {
-    state: DialogsPageType
+    dialogs: DialogType[]
+    messages: MessageType[]
     addMessageHandler: (message: string) => void
 }
 
 const maxLength100 = maxLength(100);
 const minLength2 = minLength(2)
 
-const Dialogs: React.FC<DialogsProps> = ({state, addMessageHandler}) => {
-    const messagesRender = state.messages.map(item => <Message name={item.name} key={item.id}/>)
-    const dialogsRender = state.dialogs.map(item => <DialogsItem key={item.id} number={item.id} name={item.name}/>)
+const Dialogs: React.FC<DialogsProps> = ({dialogs, addMessageHandler, messages}) => {
+    const messagesRender = dialogs.map(item => <Message name={item.name} key={item.id}/>)
+    const dialogsRender = messages.map(item => <DialogsItem key={item.id} number={item.id} name={item.name}/>)
 
     const addMessage = (formData: FormDataType) => {
         addMessageHandler(formData.message)

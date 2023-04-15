@@ -9,6 +9,7 @@ import {getUserProfileThunk, getUserStatusThunk, setUserStatusThunk} from '../..
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
 import {InitialAuthStateType} from '../../reducers/authReducer';
+import {getProfile, getUserId} from './profile-selectors';
 
 type MapDispatchToPropsType = {
     updateUserProfile: (userResponse: GetUserProfileType) => void
@@ -19,7 +20,7 @@ type MapDispatchToPropsType = {
 }
 type MapStateToPropsType = {
     profile: ProfileStateType
-    userInfo: InitialAuthStateType
+    userInfoId: number | null
 }
 type PathParamsType = {
     userID: string
@@ -30,7 +31,7 @@ class ProfileContainer extends React.Component<ProfileContainerProps> {
     componentDidMount() {
         let userId: number | null = +this.props.match.params.userID!;
         if (!userId) {
-            userId = this.props.userInfo.id;
+            userId = this.props.userInfoId;
         }
 
         this.props.getUserProfileThunk(String(userId));
@@ -43,8 +44,8 @@ class ProfileContainer extends React.Component<ProfileContainerProps> {
 
 const mapStateToProps = (state: RootState): MapStateToPropsType => {
     return {
-        profile: state.profileReducer,
-        userInfo: state.authReducer
+        profile: getProfile(state),
+        userInfoId: getUserId(state)
     }
 }
 

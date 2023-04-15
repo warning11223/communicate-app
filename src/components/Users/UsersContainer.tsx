@@ -7,12 +7,19 @@ import {
     setFollowingUserAC,
     setLoadingAC,
     setTotalUsersCountAC,
-    UsersStateType
+    UserType
 } from '../../reducers/usersReducer';
 import {followUserThunk, getUsersThunk, unFollowUserThunk} from '../../thunks/thunks';
+import {
+    geCurrentPage,
+    getFollowingInProgress,
+    getIsLoading,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from './users-selectors';
 
-type UsersContainerPropsType = {
-    usersState: UsersStateType
+type UsersContainerPropsType = MapStateToPropsType & {
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (count: number) => void
     setLoading: (value: boolean) => void
@@ -49,19 +56,19 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
 
     setCurrentPageHandler = (index: number) => {
         this.props.setCurrentPage(index + 1);
-        this.props.getUsersThunk(this.props.usersState.pageSize, index + 1);
+        this.props.getUsersThunk(this.props.pageSize, index + 1);
     }
 
     render() {
         return <Users
-            users={this.props.usersState.items}
-            totalUsersCount={this.props.usersState.totalUsersCount}
-            currentPage={this.props.usersState.currentPage}
-            pageSize={this.props.usersState.pageSize}
+            users={this.props.users}
+            totalUsersCount={this.props.totalUsersCount}
+            currentPage={this.props.currentPage}
+            pageSize={this.props.pageSize}
             setCurrentPageHandler={this.setCurrentPageHandler}
-            loading={this.props.usersState.isLoading}
+            loading={this.props.isLoading}
             setFollowingUser={this.props.setFollowingUser}
-            followingInProgress={this.props.usersState.followingInProgress}
+            followingInProgress={this.props.followingInProgress}
             followUserThunk={this.props.followUserThunk}
             unFollowUserThunk={this.props.unFollowUserThunk}
         />
@@ -69,12 +76,23 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
 }
 
 type MapStateToPropsType = {
-    usersState: UsersStateType
+    users: UserType[]
+    totalUsersCount: number
+    currentPage: number
+    pageSize: number
+    isLoading: boolean
+    followingInProgress: number[]
 }
 
 const mapStateToProps = (state: RootState): MapStateToPropsType => {
     return {
-        usersState: state.usersReducer
+        users: getUsers(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: geCurrentPage(state),
+        pageSize: getPageSize(state),
+        isLoading: getIsLoading(state),
+        followingInProgress: getFollowingInProgress(state),
+
     }
 }
 

@@ -4,6 +4,7 @@ import {addPostAC} from '../../../reducers/profileReducer';
 import {AppDispatch, RootState} from '../../../redux/reduxStore';
 import {connect} from 'react-redux';
 import {PostType} from '../../../redux/state';
+import {getPosts, getTextArea} from './posts-selectors';
 
 type MyPostsContainerProps = {
     posts: PostType[]
@@ -33,8 +34,8 @@ const MyPostsContainer: React.FC<MyPostsContainerProps> = ({ posts, textarea, ad
 
 const mapStateToProps = (state: RootState): MapStateToPropsType => {
     return {
-        posts: state.profileReducer.posts,
-        textarea: state.profileReducer.textArea,
+        posts: getPosts(state),
+        textarea: getTextArea(state),
     }
 }
 

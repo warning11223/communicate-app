@@ -12,5 +12,6 @@ const Template: ComponentStory<typeof Dialogs> = (args) => <Dialogs {...args} />
 
 export const DialogsStory = Template.bind({})
 DialogsStory.args = {
-    state: store.getState().dialogsPage
+    dialogs: store.getState().dialogsPage.dialogs,
+    messages: store.getState().dialogsPage.messages
 }
