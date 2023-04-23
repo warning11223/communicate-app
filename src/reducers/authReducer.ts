@@ -41,7 +41,6 @@ export const logoutAC = (email: string | null, id: number | null, login: string 
     type: 'LOGOUT', payload: {email, id, login, isAuth}
 } as const)
 
-
 export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunk => dispatch => {
     loginAPI(email, password, rememberMe)
         .then(res => {
