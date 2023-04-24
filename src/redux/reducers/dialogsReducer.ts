@@ -1,4 +1,4 @@
-import {DialogsReducerActionsType, DialogsPageType} from '../redux/state';
+import {DialogsReducerActionsType, DialogsPageType} from '../state';
 
 const initialState = {
     dialogs: [

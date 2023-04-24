@@ -1,9 +1,8 @@
 import React from 'react';
 import Header from './Header';
 import {RootState} from '../../redux/reduxStore';
-import {authAC, InitialAuthStateType} from '../../reducers/authReducer';
+import {authAC, getAuthMeThunk, InitialAuthStateType} from '../../redux/reducers/authReducer';
 import {connect} from 'react-redux';
-import {getAuthMeThunk} from '../../thunks/thunks';
 import {getAuthData} from './header-selectors';
 
 export type GetAuthType = {

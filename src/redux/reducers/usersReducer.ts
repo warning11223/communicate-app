@@ -1,4 +1,15 @@
-export type UsersReducerActionsType = FollowUserACType | UnfollowUserACType | SetUsersACType | SetCurrentPageType | SetTotalUsersCountType | SetLoadingACType | SetFollowingUserType;
+import {AppThunk} from '../reduxStore';
+import {followUserAPI, getUsersAPI, getUserStatusAPI, setUserStatusAPI, unFollowUserAPI} from '../../api/api';
+import {getStatusAC, setStatusAC} from './profileReducer';
+
+export type UsersReducerActionsType =
+    FollowUserACType
+    | UnfollowUserACType
+    | SetUsersACType
+    | SetCurrentPageType
+    | SetTotalUsersCountType
+    | SetLoadingACType
+    | SetFollowingUserType;
 
 export type UserType = {
     name: string
@@ -53,7 +64,10 @@ export const usersReducer = (state = initialState, action: UsersReducerActionsTy
         case 'SET_LOADING':
             return {...state, isLoading: action.payload.value};
         case 'SET_FOLLOWING':
-            return {...state, followingInProgress: action.payload.value ? [...state.followingInProgress, action.payload.id] : state.followingInProgress.filter(item => item !== action.payload.id)};
+            return {
+                ...state,
+                followingInProgress: action.payload.value ? [...state.followingInProgress, action.payload.id] : state.followingInProgress.filter(item => item !== action.payload.id)
+            };
         default:
             return state;
     }
@@ -88,9 +102,55 @@ export const setTotalUsersCountAC = (count: number) => ({
 } as const)
 
 export const setLoadingAC = (value: boolean) => ({
-    type: 'SET_LOADING', payload: { value }
+    type: 'SET_LOADING', payload: {value}
 } as const)
 
 export const setFollowingUserAC = (value: boolean, id: number) => ({
-    type: 'SET_FOLLOWING', payload: { value, id }
+    type: 'SET_FOLLOWING', payload: {value, id}
 } as const)
+
+export const getUsersThunk = (pageSize: number, index: number): AppThunk => async (dispatch) => {
+    dispatch(setLoadingAC(true));
+
+    const res = await getUsersAPI(pageSize, index + 1)
+    dispatch(setUsersAC(res.items));
+    dispatch(setLoadingAC(false));
+}
+
+export const followUserThunk = (id: number): AppThunk => async (dispatch) => {
+    dispatch(setFollowingUserAC(true, id));
+
+    const res = await followUserAPI(id)
+    if (res.resultCode === 0) {
+        dispatch(followUserAC(id));
+    }
+    dispatch(setFollowingUserAC(false, id));
+}
+
+export const unFollowUserThunk = (id: number): AppThunk => async (dispatch) => {
+    dispatch(setFollowingUserAC(true, id));
+
+    const res = await unFollowUserAPI(id)
+    if (res.resultCode === 0) {
+        dispatch(unfollowUserAC(id));
+    }
+    dispatch(setFollowingUserAC(false, id));
+}
+
+export const getUserStatusThunk = (userId: string | number): AppThunk => async (dispatch) => {
+    dispatch(setLoadingAC(true));
+
+    const res = await getUserStatusAPI(userId)
+    dispatch(setLoadingAC(false));
+    dispatch(getStatusAC(res));
+}
+
+export const setUserStatusThunk = (status: string): AppThunk => async (dispatch) => {
+    dispatch(setLoadingAC(true));
+
+    const res = await setUserStatusAPI(status)
+    dispatch(setLoadingAC(false));
+    if (res.resultCode === 0) {
+        dispatch(setStatusAC(status));
+    }
+}

@@ -1,5 +1,6 @@
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 import Header from './Header';
+import {InitialAuthStateType} from '../../redux/reducers/authReducer';
 
 
 export default {
@@ -7,13 +8,14 @@ export default {
     component: Header,
 } as ComponentMeta<typeof Header>;
 
-const state = {
+const state: InitialAuthStateType = {
     id: 1,
     login: 'test',
     email: 'test@mail.ru',
-    isAuth: false
+    isAuth: false,
+    loading: 'idle'
 }
 
-const Template: ComponentStory<typeof Header> = () => <Header authData={state} />;
+const Template: ComponentStory<typeof Header> = () => <Header authData={state}  />;
 
 export const HeaderStory = Template.bind({})

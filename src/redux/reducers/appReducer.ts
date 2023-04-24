@@ -1,5 +1,5 @@
-import {AppThunk} from '../redux/reduxStore';
-import {getAuthMeThunk} from '../thunks/thunks';
+import {AppThunk} from '../reduxStore';
+import { getAuthMeThunk } from './authReducer';
 
 export type ActionsAppReducerType = InitializeAppACType
 

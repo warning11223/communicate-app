@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, NavLink} from 'react-router-dom';
-import {InitialAuthStateType, logoutTC} from '../../reducers/authReducer';
+import {InitialAuthStateType, logoutTC} from '../../redux/reducers/authReducer';
 import {useDispatch} from 'react-redux';
 
 import s from './Header.module.css'

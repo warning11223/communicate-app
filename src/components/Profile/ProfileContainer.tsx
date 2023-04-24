@@ -1,15 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Profile from './Profile';
-import {ProfileStateType, setLoadingAC, updateUserProfileAC} from '../../reducers/profileReducer';
+import {getUserProfileThunk, ProfileStateType, setLoadingAC, updateUserProfileAC} from '../../redux/reducers/profileReducer';
 import {RootState} from '../../redux/reduxStore';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {GetUserProfileType} from '../../api/api';
-import {getUserProfileThunk, getUserStatusThunk, setUserStatusThunk} from '../../thunks/thunks';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
-import {InitialAuthStateType} from '../../reducers/authReducer';
 import {getProfile, getUserId} from './profile-selectors';
+import {getUserStatusThunk, setUserStatusThunk } from '../../redux/reducers/usersReducer';
 
 type MapDispatchToPropsType = {
     updateUserProfile: (userResponse: GetUserProfileType) => void

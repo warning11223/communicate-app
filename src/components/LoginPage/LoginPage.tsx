@@ -4,10 +4,11 @@ import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import s from './LoginPage.module.css'
 import {Input, maxLength, minLength, required} from '../common/FormControls/FormControls';
 import {useDispatch, useSelector} from 'react-redux';
-import {loginTC} from '../../reducers/authReducer';
+import {loginTC} from '../../redux/reducers/authReducer';
 import {Redirect} from 'react-router-dom';
 import {RootState} from '../../redux/reduxStore';
 import {Button} from '../common/Button/Button';
+import Preloader from '../common/Preloader/Preloader';
 
 type FormDataType = {
     login: string

@@ -1,5 +1,6 @@
-import {PostType} from '../redux/state';
-import {GetUserProfileType} from '../api/api';
+import {PostType} from '../state';
+import {getUserProfileAPI, GetUserProfileType} from '../../api/api';
+import {AppThunk} from '../reduxStore';
 
 const initialState = {
     isLoading: false,
@@ -12,24 +13,24 @@ const initialState = {
         {id: 5, text: 'post5'},
         {id: 6, text: 'post6'},
     ],
-    aboutMe: "",
+    aboutMe: '',
     contacts: {
-        facebook: "",
-        website: "",
-        vk: "",
-        twitter: "",
-        instagram: "",
-        youtube: "",
-        github: "",
-        mainLink: ""
+        facebook: '',
+        website: '',
+        vk: '',
+        twitter: '',
+        instagram: '',
+        youtube: '',
+        github: '',
+        mainLink: ''
     },
     lookingForAJob: false,
-    lookingForAJobDescription: "",
-    fullName: "",
+    lookingForAJobDescription: '',
+    fullName: '',
     userId: 0,
     photos: {
-        small: "",
-        large: ""
+        small: '',
+        large: ''
     },
     status: ''
 };
@@ -67,7 +68,13 @@ export type ProfileStateType = ProfileResponseType & {
     status: string
 }
 
-export type ProfileReducerActionsType = UpdateTextAreaActionCreateType | UpdateUserProfileType | AddPostActionCreatorType | SetLoadingType | GetStatusType | SetStatusType;
+export type ProfileReducerActionsType =
+    UpdateTextAreaActionCreateType
+    | UpdateUserProfileType
+    | AddPostActionCreatorType
+    | SetLoadingType
+    | GetStatusType
+    | SetStatusType;
 
 export const profileReducer = (state: ProfileStateType = initialState, action: ProfileReducerActionsType): ProfileStateType => {
     switch (action.type) {
@@ -104,21 +111,29 @@ export const addPostAC = (post: string) => ({
 } as const)
 
 export const updateTextAreaAC = (payload: string) => ({
-    type: 'UPDATE-TEXT', payload: { text: payload }
+    type: 'UPDATE-TEXT', payload: {text: payload}
 } as const)
 
 export const updateUserProfileAC = (userResponse: GetUserProfileType) => ({
-    type: 'UPDATE_USER_PROFILE', payload: { userResponse }
+    type: 'UPDATE_USER_PROFILE', payload: {userResponse}
 } as const)
 
 export const setLoadingAC = (value: boolean) => ({
-    type: 'SET_LOADING', payload: { value }
+    type: 'SET_LOADING', payload: {value}
 } as const)
 
 export const getStatusAC = (status: string) => ({
-    type: 'GET_STATUS', payload: { status }
+    type: 'GET_STATUS', payload: {status}
 } as const)
 
 export const setStatusAC = (status: string) => ({
-    type: 'SET_STATUS', payload: { status }
+    type: 'SET_STATUS', payload: {status}
 } as const)
+
+export const getUserProfileThunk = (id: string): AppThunk => async (dispatch) => {
+    dispatch(setLoadingAC(true))
+
+    const res = await getUserProfileAPI(id)
+    dispatch(setLoadingAC(false));
+    dispatch(updateUserProfileAC(res.data));
+}

@@ -1,8 +1,6 @@
 import React from 'react';
 import s from './ProfileInfo.module.css';
-import {ProfileStateType} from '../../../reducers/profileReducer';
-
-
+import {ProfileStateType} from '../../../redux/reducers/profileReducer';
 
 type PropsType = {
     state: ProfileStateType

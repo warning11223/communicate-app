@@ -14,7 +14,8 @@ import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import {connect} from 'react-redux';
 import {RootState} from './redux/reduxStore';
-import {initializeAppTC} from './reducers/appReducer';
+import {initializeAppTC} from './redux/reducers/appReducer';
+import Preloader from './components/common/Preloader/Preloader';
 
 type AppProps = {
     initializeAppTC: () => void
@@ -32,7 +33,7 @@ class App extends React.Component<AppProps> {
     }
 
     render() {
-       /* if (!this.props.initialized) {
+        /*if (!this.props.initialized) {
             return <Preloader />
         }*/
 
@@ -40,14 +41,23 @@ class App extends React.Component<AppProps> {
             <div className="container">
                 <HeaderContainer/>
                 <Navigation/>
-                <Route path="/" exact component={() => <Greetings/>}/>
-                <Route path="/profile/:userID?" component={() => <ProfileContainer/>}/>
-                <Route path="/dialogs" component={() => <DialogsContainer/>}/>
-                <Route path="/users/" component={() => <UsersContainer/>}/>
-                <Route path="/login" component={() => <LoginPage/>}/>
-                <Route path="/news" component={() => <News/>}/>
-                <Route path="/music" component={() => <Music/>}/>
-                <Route path="/settings" component={() => <Settings/>}/>
+                {
+                    !this.props.initialized
+                        ? <div style={{position: 'fixed', top: '10%', textAlign: 'center', width: '100%'}}>
+                            <Preloader />
+                          </div>
+                        :
+                        <>
+                            <Route path="/" exact component={() => <Greetings/>}/>
+                            <Route path="/profile/:userID?" component={() => <ProfileContainer/>}/>
+                            <Route path="/dialogs" component={() => <DialogsContainer/>}/>
+                            <Route path="/users/" component={() => <UsersContainer/>}/>
+                            <Route path="/login" component={() => <LoginPage/>}/>
+                            <Route path="/news" component={() => <News/>}/>
+                            <Route path="/music" component={() => <Music/>}/>
+                            <Route path="/settings" component={() => <Settings/>}/>
+                        </>
+                }
             </div>
         );
     }

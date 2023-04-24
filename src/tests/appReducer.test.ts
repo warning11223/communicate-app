@@ -1,5 +1,5 @@
-import {authAC, authReducer, logoutAC} from '../reducers/authReducer';
-import {appReducer, initializeAppAC} from '../reducers/appReducer';
+import {authAC, authReducer, logoutAC} from '../redux/reducers/authReducer';
+import {appReducer, initializeAppAC} from '../redux/reducers/appReducer';
 
 let initialState: { initialized: boolean };
 

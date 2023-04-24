@@ -3,13 +3,15 @@ import Users from './Users';
 import {connect} from 'react-redux';
 import {RootState} from '../../redux/reduxStore';
 import {
+    followUserThunk,
+    getUsersThunk,
     setCurrentPageAC,
     setFollowingUserAC,
     setLoadingAC,
     setTotalUsersCountAC,
+    unFollowUserThunk,
     UserType
-} from '../../reducers/usersReducer';
-import {followUserThunk, getUsersThunk, unFollowUserThunk} from '../../thunks/thunks';
+} from '../../redux/reducers/usersReducer';
 import {
     geCurrentPage,
     getFollowingInProgress,

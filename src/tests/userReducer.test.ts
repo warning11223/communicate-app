@@ -8,7 +8,7 @@ import {
     unfollowUserAC,
     usersReducer,
     UsersStateType
-} from '../reducers/usersReducer';
+} from '../redux/reducers/usersReducer';
 
 let initialState: UsersStateType;
 
