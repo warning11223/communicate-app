@@ -1,5 +1,6 @@
 import React from 'react';
 import s from './Paginator.module.css';
+import ReactPaginate from 'react-paginate';
 
 type PaginatorPropsType = {
     totalUsersCount: number
@@ -21,17 +22,19 @@ export const Paginator: React.FC<PaginatorPropsType> = ({
         usersNumbers.push(i);
     }
 
-    const pagination = usersNumbers.map((item, index) => {
-        return <span
-            key={index}
-            className={currentPage === index + 1 ? s.activePage : s.page}
-            onClick={() => setCurrentPageHandler(index)}
-        >{item}</span>
-    })
-
     return (
         <ul className={s.paginationContainer}>
-            {pagination}
+            <ReactPaginate
+                className={s.reactPaginate}
+                breakLabel="..."
+                nextLabel="&#10153;"
+                onPageChange={() => setCurrentPageHandler(currentPage)}
+                pageRangeDisplayed={5}
+                pageCount={pagesCount}
+                previousLabel="&#129188;"
+                renderOnZeroPageCount={null}
+                activeLinkClassName={s.activePage}
+            />
         </ul>
     );
 };

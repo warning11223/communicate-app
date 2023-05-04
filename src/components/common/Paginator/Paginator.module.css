@@ -3,6 +3,7 @@
     font-weight: 700;
     font-size: 20px;
     cursor: pointer;
+
 }
 .page {
     color: #ffffff;
@@ -18,4 +19,10 @@
     max-width: max-content;
     padding: 2px 10px 2px 10px;
     margin-bottom: 15px;
+}
+.reactPaginate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
 }

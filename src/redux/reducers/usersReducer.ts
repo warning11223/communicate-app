@@ -37,7 +37,7 @@ const initialState: UsersStateType = {
     items: [],
     error: '',
     pageSize: 5,
-    totalUsersCount: 20,
+    totalUsersCount: 120,
     currentPage: 1,
     isLoading: false,
     followingInProgress: [],
@@ -114,6 +114,7 @@ export const getUsersThunk = (pageSize: number, index: number): AppThunk => asyn
 
     const res = await getUsersAPI(pageSize, index + 1)
     dispatch(setUsersAC(res.items));
+    dispatch(setTotalUsersCountAC(res.totalCount))
     dispatch(setLoadingAC(false));
 }
 
