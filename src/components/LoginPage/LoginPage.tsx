@@ -32,6 +32,7 @@ let LoginForm = (props: InjectedFormProps<FormDataType>) => {
                     type="text"
                     label="Login"
                     validate={[required, maxLength30, minLength2]}
+
                 />
             </div>
             <div>
@@ -78,6 +79,19 @@ const LoginPage = () => {
         <div className={s.wrapper}>
             <h2>Login</h2>
             <LoginReduxForm onSubmit={onSubmit}/>
+
+            <div style={{paddingTop: '50px', maxWidth: '230px'}}>
+                <p>To log in get registered
+                    <a href={'https://social-network.samuraijs.com/'}
+                       target={'_blank'}
+                       style={{color: '#F51A51'}}
+                    > here
+                    </a>
+                </p>
+                <p>or use common test account credentials:</p>
+                <p>Email: free@samuraijs.com</p>
+                <p>Password: free</p>
+            </div>
         </div>
     );
 };

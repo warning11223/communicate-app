@@ -1,11 +1,6 @@
-import React from 'react';
-import './App.css';
-
+import React, {lazy, Suspense} from 'react';
 import Navigation from './components/Navigation/Navigation';
 import {Route} from 'react-router-dom';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
-import UsersContainer from './components/Users/UsersContainer';
-import ProfileContainer from './components/Profile/ProfileContainer';
 import Greetings from './components/Greetings/Greetings';
 import HeaderContainer from './components/Header/HeaderContainer';
 import LoginPage from './components/LoginPage/LoginPage';
@@ -16,6 +11,14 @@ import {connect} from 'react-redux';
 import {RootState} from './redux/reduxStore';
 import {initializeAppTC} from './redux/reducers/appReducer';
 import Preloader from './components/common/Preloader/Preloader';
+import './App.css';
+import {withSuspense} from './common/withSuspense';
+import {Page404} from './components/Page404/Page404';
+
+const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'))
+const UsersContainer = lazy(() => import('./components/Users/UsersContainer'))
+const ProfileContainer = lazy(() => import('./components/Profile/ProfileContainer'))
+
 
 type AppProps = {
     initializeAppTC: () => void
@@ -26,10 +29,14 @@ type MapStateToPropsType = {
     initialized: boolean
 }
 
-class App extends React.Component<AppProps> {
+const UsersContainerWithSuspense = withSuspense(UsersContainer)
+const DialogsContainerWithSuspense = withSuspense(DialogsContainer)
+const ProfileContainerWithSuspense = withSuspense(ProfileContainer)
 
+class App extends React.Component<AppProps> {
     componentDidMount() {
         this.props.initializeAppTC();
+
     }
 
     render() {
@@ -49,13 +56,16 @@ class App extends React.Component<AppProps> {
                         :
                         <>
                             <Route path="/" exact component={() => <Greetings/>}/>
-                            <Route path="/profile/:userID?" component={() => <ProfileContainer/>}/>
-                            <Route path="/dialogs" component={() => <DialogsContainer/>}/>
-                            <Route path="/users/" component={() => <UsersContainer/>}/>
+                            <Route path="/profile/:userID?" component={ProfileContainerWithSuspense}/>
+                            <Route path="/dialogs" component={DialogsContainerWithSuspense}/>
+                            <Route path="/users/" component={UsersContainerWithSuspense}/>
                             <Route path="/login" component={() => <LoginPage/>}/>
                             <Route path="/news" component={() => <News/>}/>
                             <Route path="/music" component={() => <Music/>}/>
                             <Route path="/settings" component={() => <Settings/>}/>
+                            <Route path="/page-404" component={() => <Page404 />}/>
+
+                            {/*<Route path="*" location={new Location()}/>*/}
                         </>
                 }
             </div>

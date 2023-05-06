@@ -50,6 +50,7 @@ const Users: React.FC<UsersPropsType> = ({
                     }
                     return (
                         <User
+                            key={item.id}
                             item={item}
                             followUserHandler={followUserHandler}
                             unFollowUserHandler={unFollowUserHandler}
