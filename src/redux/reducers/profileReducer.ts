@@ -9,9 +9,6 @@ const initialState = {
         {id: 1, text: 'post1'},
         {id: 2, text: 'post2'},
         {id: 3, text: 'post3'},
-        {id: 4, text: 'post4'},
-        {id: 5, text: 'post5'},
-        {id: 6, text: 'post6'},
     ],
     aboutMe: '',
     contacts: {
@@ -74,16 +71,16 @@ export type ProfileReducerActionsType =
     | AddPostActionCreatorType
     | SetLoadingType
     | GetStatusType
-    | SetStatusType;
+    | SetStatusType
 
 export const profileReducer = (state: ProfileStateType = initialState, action: ProfileReducerActionsType): ProfileStateType => {
     switch (action.type) {
         case 'ADD-POST':
             const newPost = {
                 id: new Date().getTime(),
-                text: action.post
+                text: action.post,
             };
-            return {...state, posts: [...state.posts, newPost], textArea: ''};
+            return {...state, posts: [newPost, ...state.posts]};
         case 'UPDATE-TEXT':
             return {...state, textArea: action.payload.text};
         case 'UPDATE_USER_PROFILE':
@@ -129,6 +126,7 @@ export const getStatusAC = (status: string) => ({
 export const setStatusAC = (status: string) => ({
     type: 'SET_STATUS', payload: {status}
 } as const)
+
 
 export const getUserProfileThunk = (id: string): AppThunk => async (dispatch) => {
     dispatch(setLoadingAC(true))

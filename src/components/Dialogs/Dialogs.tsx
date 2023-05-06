@@ -24,6 +24,7 @@ const Dialogs: React.FC<DialogsProps> = ({dialogs, addMessageHandler, messages})
 
     const addMessage = (formData: FormDataType) => {
         addMessageHandler(formData.message)
+        formData.message = ''
     }
 
     return (

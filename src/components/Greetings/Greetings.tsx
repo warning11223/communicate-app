@@ -12,7 +12,7 @@ const Greetings = () => {
     if (loading === 'loading') {
         return (
             <div style={{position: 'fixed', top: '10%', textAlign: 'center', width: '100%'}}>
-                <Preloader />
+                <Preloader/>
             </div>
         )
     }

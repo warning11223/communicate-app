@@ -3,7 +3,7 @@ import './index.css';
 
 import App from './App';
 import {createRoot} from 'react-dom/client';
-import {BrowserRouter, HashRouter} from 'react-router-dom';
+import {HashRouter} from 'react-router-dom';
 import {reduxStore} from './redux/reduxStore';
 import {Provider} from 'react-redux';
 

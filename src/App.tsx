@@ -1,4 +1,4 @@
-import React, {lazy, Suspense} from 'react';
+import React, {lazy} from 'react';
 import Navigation from './components/Navigation/Navigation';
 import {Route} from 'react-router-dom';
 import Greetings from './components/Greetings/Greetings';
@@ -18,7 +18,6 @@ import {Page404} from './components/Page404/Page404';
 const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'))
 const UsersContainer = lazy(() => import('./components/Users/UsersContainer'))
 const ProfileContainer = lazy(() => import('./components/Profile/ProfileContainer'))
-
 
 type AppProps = {
     initializeAppTC: () => void
@@ -51,8 +50,8 @@ class App extends React.Component<AppProps> {
                 {
                     !this.props.initialized
                         ? <div style={{position: 'fixed', top: '10%', textAlign: 'center', width: '100%'}}>
-                            <Preloader />
-                          </div>
+                            <Preloader/>
+                        </div>
                         :
                         <>
                             <Route path="/" exact component={() => <Greetings/>}/>
@@ -63,7 +62,7 @@ class App extends React.Component<AppProps> {
                             <Route path="/news" component={() => <News/>}/>
                             <Route path="/music" component={() => <Music/>}/>
                             <Route path="/settings" component={() => <Settings/>}/>
-                            <Route path="/page-404" component={() => <Page404 />}/>
+                            <Route path="/page-404" component={() => <Page404/>}/>
 
                             {/*<Route path="*" location={new Location()}/>*/}
                         </>

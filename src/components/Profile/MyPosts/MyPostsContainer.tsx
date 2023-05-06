@@ -21,7 +21,7 @@ type MapDispatchToPropsType = {
     addPostHandler: (post: string) => void
 }
 
-const MyPostsContainer: React.FC<MyPostsContainerProps> = ({ posts, textarea, addPostHandler }) => {
+const MyPostsContainer: React.FC<MyPostsContainerProps> = ({posts, textarea, addPostHandler}) => {
 
     return (
         <MyPosts
@@ -41,7 +41,7 @@ const mapStateToProps = (state: RootState): MapStateToPropsType => {
 
 const mapDispatchToProps = (dispatch: AppDispatch): MapDispatchToPropsType => {
     return {
-        addPostHandler: (post: string) => dispatch(addPostAC(post))
+        addPostHandler: (post: string) => dispatch(addPostAC(post)),
     }
 }
 

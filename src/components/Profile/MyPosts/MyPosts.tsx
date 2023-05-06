@@ -22,6 +22,7 @@ const MyPosts: React.FC<MyPostsProps> = ({ addPostHandler, posts }) => {
 
     const onAddPost = (formData: FormDataType) => {
         addPostHandler(formData.post)
+        formData.post = ''
     }
 
     return (
@@ -49,6 +50,7 @@ const AddPostForm = (props: InjectedFormProps<FormDataType>) => {
                     name="post"
                     component={Textarea}
                     label="Add new post"
+                    placeholder={"Add new post..."}
                     validate={[required, maxLength100, minLength2]}
                 />
             </div>
