@@ -10,7 +10,7 @@
     overflow: hidden;
 }
 .header::after {
-    content: url("/src/img/snegovik.png");
+    content: url("/src/assets/img/snegovik.png");
     position: absolute;
     top: -14px;
     right: -21px;
@@ -23,7 +23,7 @@
     font-size: 25px;
 }
 .headerLogo::after {
-    content: url("/src/img/shapka.png");
+    content: url("/src/assets/img/shapka.png");
     position: absolute;
     top: -8px;
     right: -9px;

@@ -1,5 +1,5 @@
 import React from 'react';
-import user from '../../../../img/user.png'
+import user from '../../../../assets/img/user.png'
 
 import s from './Post.module.css'
 

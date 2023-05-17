@@ -1,5 +1,5 @@
 import {PostType} from '../state';
-import {getUserProfileAPI, GetUserProfileType} from '../../api/api';
+import {getUserProfileAPI, GetUserProfileType, setPhotoAPI} from '../../api/api';
 import {AppThunk} from '../reduxStore';
 
 const initialState = {
@@ -72,6 +72,7 @@ export type ProfileReducerActionsType =
     | SetLoadingType
     | GetStatusType
     | SetStatusType
+    | SetPhotoType
 
 export const profileReducer = (state: ProfileStateType = initialState, action: ProfileReducerActionsType): ProfileStateType => {
     switch (action.type) {
@@ -91,6 +92,8 @@ export const profileReducer = (state: ProfileStateType = initialState, action: P
             return {...state, status: action.payload.status};
         case 'SET_STATUS':
             return {...state, status: action.payload.status};
+        case 'SET_PHOTO':
+            return {...state, photos: action.payload.data}
         default:
             return state;
     }
@@ -102,6 +105,7 @@ export type AddPostActionCreatorType = ReturnType<typeof addPostAC>;
 export type SetLoadingType = ReturnType<typeof setLoadingAC>;
 export type GetStatusType = ReturnType<typeof getStatusAC>;
 export type SetStatusType = ReturnType<typeof setStatusAC>;
+export type SetPhotoType = ReturnType<typeof setPhoto>;
 
 export const addPostAC = (post: string) => ({
     type: 'ADD-POST', post
@@ -127,11 +131,22 @@ export const setStatusAC = (status: string) => ({
     type: 'SET_STATUS', payload: {status}
 } as const)
 
+export const setPhoto = (data: { small: string, large: string }) => ({
+    type: 'SET_PHOTO', payload: {data}
+} as const)
 
 export const getUserProfileThunk = (id: string): AppThunk => async (dispatch) => {
     dispatch(setLoadingAC(true))
 
     const res = await getUserProfileAPI(id)
-    dispatch(setLoadingAC(false));
-    dispatch(updateUserProfileAC(res.data));
+    dispatch(setLoadingAC(false))
+    dispatch(updateUserProfileAC(res.data))
+}
+
+export const setPhotoThunk = (photo: File): AppThunk => async (dispatch) => {
+    dispatch(setLoadingAC(true))
+
+    const res = await setPhotoAPI(photo)
+    dispatch(setLoadingAC(false))
+    dispatch(setPhoto(res))
 }

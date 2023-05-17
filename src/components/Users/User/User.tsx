@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './User.module.css';
 import {Link} from 'react-router-dom';
-import user_avatar from '../../../img/user-avatar.png';
+import user_avatar from '../../../assets/img/user-avatar.png';
 import {UserType} from '../../../redux/reducers/usersReducer';
 
 type UserPropsType = {

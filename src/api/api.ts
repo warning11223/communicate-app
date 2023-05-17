@@ -18,7 +18,7 @@ export type GetUserProfileType = {
         vk: string
         twitter: string
         instagram: string
-        youtube:  string
+        youtube: string
         github: string
         mainLink: string
 
@@ -74,6 +74,14 @@ export const setUserStatusAPI = (status: string) => {
         status
     })
         .then(response => response.data)
+}
+
+export const setPhotoAPI = (image: File) => {
+    const formData = new FormData()
+    formData.append('image', image)
+
+    return instance.put<ResponseType<{ photos: { small: string, large: string } }>>(`/profile/photo`, formData)
+        .then(response => response.data.data.photos)
 }
 
 export const loginAPI = (email: string, password: string, rememberMe: boolean) => {

@@ -1,7 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Profile from './Profile';
-import {getUserProfileThunk, ProfileStateType, setLoadingAC, updateUserProfileAC} from '../../redux/reducers/profileReducer';
+import {
+    getUserProfileThunk,
+    ProfileStateType,
+    setLoadingAC,
+    setPhotoThunk,
+    updateUserProfileAC
+} from '../../redux/reducers/profileReducer';
 import {RootState} from '../../redux/reduxStore';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {GetUserProfileType} from '../../api/api';
@@ -16,6 +22,7 @@ type MapDispatchToPropsType = {
     getUserProfileThunk: (id: string) => void
     getUserStatusThunk: (userId: string | number) => void
     setUserStatusThunk: (status: string) => void
+    setPhotoThunk: (photo: File) => void
 }
 type MapStateToPropsType = {
     profile: ProfileStateType
@@ -37,7 +44,12 @@ class ProfileContainer extends React.Component<ProfileContainerProps> {
         this.props.getUserStatusThunk(String(userId));
     }
     render() {
-        return <Profile state={this.props.profile} setUserStatusThunk={this.props.setUserStatusThunk}/>
+        return <Profile
+            state={this.props.profile}
+            setUserStatusThunk={this.props.setUserStatusThunk}
+            setPhotoThunk={this.props.setPhotoThunk}
+            isOwner={!this.props.match.params.userID}
+        />
     }
 }
 
@@ -53,7 +65,8 @@ const mapDispatchToProps: MapDispatchToPropsType = {
     setLoading: setLoadingAC,
     getUserProfileThunk,
     getUserStatusThunk,
-    setUserStatusThunk
+    setUserStatusThunk,
+    setPhotoThunk
 }
 
 //export default withAuthRedirect(connect(mapStateToProps, mapDispatchToProps)(withRouter(ProfileContainer)));
