@@ -7,14 +7,14 @@ import {
     setLoadingAC,
     setPhotoThunk,
     updateUserProfileAC
-} from '../../redux/reducers/profileReducer';
+} from '../../redux/reducers/profile/profileReducer';
 import {RootState} from '../../redux/reduxStore';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {GetUserProfileType} from '../../api/api';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
 import {getProfile, getUserId} from './profile-selectors';
-import {getUserStatusThunk, setUserStatusThunk } from '../../redux/reducers/usersReducer';
+import {getUserStatusThunk, setUserStatusThunk } from '../../redux/reducers/users/usersReducer';
 
 type MapDispatchToPropsType = {
     updateUserProfile: (userResponse: GetUserProfileType) => void

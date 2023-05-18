@@ -1,4 +1,4 @@
-import {DialogsReducerActionsType, DialogsPageType} from '../state';
+import {DialogsReducerActionsType, DialogsPageType} from '../../state';
 
 const initialState = {
     dialogs: [

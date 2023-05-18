@@ -1,4 +1,4 @@
-import {authAC, authReducer, InitialAuthStateType, loginTC, logoutAC} from '../redux/reducers/authReducer';
+import {authAC, authReducer, InitialAuthStateType, loginTC, logoutAC} from '../redux/reducers/auth/authReducer';
 
 let initialState: InitialAuthStateType;
 

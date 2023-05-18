@@ -1,7 +1,7 @@
 import React from 'react';
 
 import s from './Button.module.css'
-import {InitialAuthStateType} from '../../../redux/reducers/authReducer';
+import {InitialAuthStateType} from '../../../redux/reducers/auth/authReducer';
 
 type ButtonPropsType = {
     callback?: () => void

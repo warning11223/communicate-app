@@ -10,6 +10,66 @@ const instance = axios.create({
     }
 });
 
+export const networkAPI = {
+    getUsersAPI: (count = 5, page = 1) => {
+        return instance.get<UsersResponseType>(`users?count=${count}&page=${page}`)
+            .then(res => res.data)
+    },
+    followUserAPI: (id: number) => {
+        return instance.post(`follow/${id}`)
+            .then(res => res.data)
+    },
+    unFollowUserAPI: (id: number) => {
+        return instance.delete(`follow/${id}`)
+            .then(res => res.data)
+    },
+    getAuthMeAPI: () => {
+        return instance.get<GetAuthType>('auth/me')
+            .then(res => res.data.data)
+    },
+    getUserProfileAPI: (id: string = '23955') => {
+        return instance.get<GetUserProfileType>(`profile/${id}`)
+            .then(res => res)
+    },
+    getUserStatusAPI: (userId: string | number = '23955') => {
+        return instance.get(`profile/status/${userId}`)
+            .then(res => res.data)
+    },
+    setUserStatusAPI: (status: string) => {
+        return instance.put<ResponseType<{}>>(`profile/status`, {
+            status
+        })
+            .then(res => res.data)
+    },
+    setPhotoAPI: (image: File) => {
+        const formData = new FormData()
+        formData.append('image', image)
+
+        return instance.put<ResponseType<{ photos: { small: string, large: string } }>>(`/profile/photo`, formData)
+            .then(res => res.data.data.photos)
+    },
+    loginAPI: (email: string, password: string, rememberMe: boolean, captcha: string) => {
+        return instance.post<ResponseType<{ userId: number }>>('auth/login', {
+            email,
+            password,
+            rememberMe,
+            captcha
+        })
+            .then(res => res.data)
+    },
+    logoutAPI: () => {
+        return instance.delete<ResponseType<{}>>('auth/login')
+            .then(res => res.data)
+    },
+    setProfile: (properties: ProfileProps) => {
+        return instance.put<ResponseType<{}>>('/profile', properties)
+            .then(res => res.data)
+    },
+    getCaptcha: () => {
+        return instance.get<{ url: string }>('/security/get-captcha-url')
+    }
+}
+
 export type GetUserProfileType = {
     aboutMe: string
     contacts: {
@@ -39,61 +99,19 @@ export type ResponseType<D> = {
     data: D
 }
 
-export const getUsersAPI = (count = 5, page = 1) => {
-    return instance.get<UsersResponseType>(`users?count=${count}&page=${page}`)
-        .then(response => response.data)
-}
-
-export const followUserAPI = (id: number) => {
-    return instance.post(`follow/${id}`)
-        .then(response => response.data)
-}
-
-export const unFollowUserAPI = (id: number) => {
-    return instance.delete(`follow/${id}`)
-        .then(response => response.data)
-}
-
-export const getAuthMeAPI = () => {
-    return instance.get<GetAuthType>('auth/me')
-        .then(response => response.data.data)
-}
-
-export const getUserProfileAPI = (id: string = '23955') => {
-    return instance.get<GetUserProfileType>(`profile/${id}`)
-        .then(response => response)
-}
-
-export const getUserStatusAPI = (userId: string | number = '23955') => {
-    return instance.get(`profile/status/${userId}`)
-        .then(response => response.data)
-}
-
-export const setUserStatusAPI = (status: string) => {
-    return instance.put<ResponseType<{}>>(`profile/status`, {
-        status
-    })
-        .then(response => response.data)
-}
-
-export const setPhotoAPI = (image: File) => {
-    const formData = new FormData()
-    formData.append('image', image)
-
-    return instance.put<ResponseType<{ photos: { small: string, large: string } }>>(`/profile/photo`, formData)
-        .then(response => response.data.data.photos)
-}
-
-export const loginAPI = (email: string, password: string, rememberMe: boolean) => {
-    return instance.post<ResponseType<{ userId: number }>>('auth/login', {
-        email,
-        password,
-        rememberMe
-    })
-        .then(response => response.data)
-}
-
-export const logoutAPI = () => {
-    return instance.delete<ResponseType<{}>>('auth/login')
-        .then(res => res.data)
+export type ProfileProps = {
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: {
+        github: string
+        vk: string
+        facebook: string
+        instagram: string
+        twitter: string
+        website: string
+        youtube: string
+        mainLink: string
+    }
 }

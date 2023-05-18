@@ -1,13 +1,13 @@
 import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
-import {dialogsReducer} from './reducers/dialogsReducer';
-import {profileReducer, ProfileReducerActionsType} from './reducers/profileReducer';
-import {usersReducer, UsersReducerActionsType} from './reducers/usersReducer';
-import {authReducer, AuthReducerActionsType} from './reducers/authReducer';
+import {dialogsReducer} from './reducers/dialogs/dialogsReducer';
+import {profileReducer, ProfileReducerActionsType} from './reducers/profile/profileReducer';
+import {usersReducer, UsersReducerActionsType} from './reducers/users/usersReducer';
+import {authReducer, AuthReducerActionsType} from './reducers/auth/authReducer';
 import thunk, {ThunkAction} from 'redux-thunk';
 import {reducer as formReducer, stopSubmit} from 'redux-form'
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {DialogsReducerActionsType} from './state';
-import {ActionsAppReducerType, appReducer} from './reducers/appReducer';
+import {ActionsAppReducerType, appReducer} from './reducers/app/appReducer';
 
 const rootReducer = combineReducers({
     dialogsReducer,

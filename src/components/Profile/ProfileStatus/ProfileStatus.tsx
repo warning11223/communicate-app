@@ -17,7 +17,7 @@ const ProfileStatus: React.FC<PropsType> = ({status, changeStatus}) => {
     }
 
     return (
-        <>
+        <div>
             {
                 !editable
                     ? <span
@@ -33,7 +33,7 @@ const ProfileStatus: React.FC<PropsType> = ({status, changeStatus}) => {
                         autoFocus
                     />
             }
-        </>
+        </div>
     );
 };
 

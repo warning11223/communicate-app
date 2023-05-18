@@ -1,5 +1,5 @@
-import {addPostAC, updateTextAreaAC} from './reducers/profileReducer';
-import {addMessageActionCreator, dialogsReducer} from './reducers/dialogsReducer';
+import {addPostAC, updateTextAreaAC} from './reducers/profile/profileReducer';
+import {addMessageActionCreator, dialogsReducer} from './reducers/dialogs/dialogsReducer';
 
 export type DialogType = {
     id: number

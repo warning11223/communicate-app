@@ -9,7 +9,7 @@ import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import {connect} from 'react-redux';
 import {RootState} from './redux/reduxStore';
-import {initializeAppTC} from './redux/reducers/appReducer';
+import {initializeAppTC} from './redux/reducers/app/appReducer';
 import Preloader from './components/common/Preloader/Preloader';
 import './App.css';
 import {withSuspense} from './common/withSuspense';

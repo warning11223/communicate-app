@@ -1,6 +1,6 @@
-import {AppThunk} from '../reduxStore';
-import {followUserAPI, getUsersAPI, getUserStatusAPI, setUserStatusAPI, unFollowUserAPI} from '../../api/api';
-import {getStatusAC, setStatusAC} from './profileReducer';
+import {AppThunk} from '../../reduxStore';
+import {getStatusAC, setStatusAC} from '../profile/profileReducer';
+import {networkAPI} from '../../../api/api';
 
 export type UsersReducerActionsType =
     FollowUserACType
@@ -112,7 +112,7 @@ export const setFollowingUserAC = (value: boolean, id: number) => ({
 export const getUsersThunk = (pageSize: number, index: number): AppThunk => async (dispatch) => {
     dispatch(setLoadingAC(true));
 
-    const res = await getUsersAPI(pageSize, index + 1)
+    const res = await networkAPI.getUsersAPI(pageSize, index + 1)
     dispatch(setUsersAC(res.items));
     dispatch(setTotalUsersCountAC(res.totalCount))
     dispatch(setLoadingAC(false));
@@ -121,7 +121,7 @@ export const getUsersThunk = (pageSize: number, index: number): AppThunk => asyn
 export const followUserThunk = (id: number): AppThunk => async (dispatch) => {
     dispatch(setFollowingUserAC(true, id));
 
-    const res = await followUserAPI(id)
+    const res = await networkAPI.followUserAPI(id)
     if (res.resultCode === 0) {
         dispatch(followUserAC(id));
     }
@@ -131,7 +131,7 @@ export const followUserThunk = (id: number): AppThunk => async (dispatch) => {
 export const unFollowUserThunk = (id: number): AppThunk => async (dispatch) => {
     dispatch(setFollowingUserAC(true, id));
 
-    const res = await unFollowUserAPI(id)
+    const res = await networkAPI.unFollowUserAPI(id)
     if (res.resultCode === 0) {
         dispatch(unfollowUserAC(id));
     }
@@ -141,7 +141,7 @@ export const unFollowUserThunk = (id: number): AppThunk => async (dispatch) => {
 export const getUserStatusThunk = (userId: string | number): AppThunk => async (dispatch) => {
     dispatch(setLoadingAC(true));
 
-    const res = await getUserStatusAPI(userId)
+    const res = await networkAPI.getUserStatusAPI(userId)
     dispatch(setLoadingAC(false));
     dispatch(getStatusAC(res));
 }
@@ -149,7 +149,7 @@ export const getUserStatusThunk = (userId: string | number): AppThunk => async (
 export const setUserStatusThunk = (status: string): AppThunk => async (dispatch) => {
     dispatch(setLoadingAC(true));
 
-    const res = await setUserStatusAPI(status)
+    const res = await networkAPI.setUserStatusAPI(status)
     dispatch(setLoadingAC(false));
     if (res.resultCode === 0) {
         dispatch(setStatusAC(status));

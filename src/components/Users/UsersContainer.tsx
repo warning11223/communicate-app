@@ -11,7 +11,7 @@ import {
     setTotalUsersCountAC,
     unFollowUserThunk,
     UserType
-} from '../../redux/reducers/usersReducer';
+} from '../../redux/reducers/users/usersReducer';
 import {
     geCurrentPage,
     getFollowingInProgress,

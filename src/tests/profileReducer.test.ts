@@ -7,7 +7,7 @@ import {
     setStatusAC,
     updateTextAreaAC,
     updateUserProfileAC
-} from '../redux/reducers/profileReducer';
+} from '../redux/reducers/profile/profileReducer';
 
 let initialState: ProfileStateType;
 

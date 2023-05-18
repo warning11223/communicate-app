@@ -1,6 +1,6 @@
-import {PostType} from '../state';
-import {getUserProfileAPI, GetUserProfileType, setPhotoAPI} from '../../api/api';
-import {AppThunk} from '../reduxStore';
+import {PostType} from '../../state';
+import {GetUserProfileType, networkAPI, ProfileProps} from '../../../api/api';
+import {AppThunk} from '../../reduxStore';
 
 const initialState = {
     isLoading: false,
@@ -138,7 +138,7 @@ export const setPhoto = (data: { small: string, large: string }) => ({
 export const getUserProfileThunk = (id: string): AppThunk => async (dispatch) => {
     dispatch(setLoadingAC(true))
 
-    const res = await getUserProfileAPI(id)
+    const res = await networkAPI.getUserProfileAPI(id)
     dispatch(setLoadingAC(false))
     dispatch(updateUserProfileAC(res.data))
 }
@@ -146,7 +146,17 @@ export const getUserProfileThunk = (id: string): AppThunk => async (dispatch) =>
 export const setPhotoThunk = (photo: File): AppThunk => async (dispatch) => {
     dispatch(setLoadingAC(true))
 
-    const res = await setPhotoAPI(photo)
+    const res = await networkAPI.setPhotoAPI(photo)
     dispatch(setLoadingAC(false))
     dispatch(setPhoto(res))
+}
+
+
+export const setProfileThunk = (properties: ProfileProps, id: string): AppThunk => async (dispatch) => {
+    dispatch(setLoadingAC(true))
+
+    const res1 = await networkAPI.setProfile(properties)
+    const res2 = await getUserProfileThunk(id)
+
+    dispatch(setLoadingAC(false))
 }

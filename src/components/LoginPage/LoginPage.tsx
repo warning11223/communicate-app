@@ -1,18 +1,20 @@
 import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
-
-import s from './LoginPage.module.css'
 import {Input, maxLength, minLength, required} from '../common/FormControls/FormControls';
 import {useDispatch, useSelector} from 'react-redux';
-import {loginTC} from '../../redux/reducers/authReducer';
+import {loginTC} from '../../redux/reducers/auth/authReducer';
 import {Redirect} from 'react-router-dom';
-import {RootState} from '../../redux/reduxStore';
+import {useAppSelector} from '../../redux/reduxStore';
 import {Button} from '../common/Button/Button';
+import {getCaptcha, getIsAuth} from '../../redux/reducers/auth/auth.selectors';
+
+import s from './LoginPage.module.css'
 
 type FormDataType = {
     login: string
     password: string
     rememberMe: boolean
+    captcha: string
 }
 
 const maxLength30 = maxLength(30);
@@ -20,8 +22,9 @@ const minLength2 = minLength(2)
 const minLength3 = minLength(3)
 
 let LoginForm = (props: InjectedFormProps<FormDataType>) => {
+    const captcha = useAppSelector(getCaptcha)
     const {handleSubmit} = props;
-
+    console.log(captcha)
     return (
         <form onSubmit={handleSubmit} className={s.form}>
             <div>
@@ -48,6 +51,22 @@ let LoginForm = (props: InjectedFormProps<FormDataType>) => {
                 <label htmlFor="rememberMe">Remember me</label>
                 <Field name="rememberMe" component="input" type="checkbox"/>
             </div>
+            {
+                captcha && <img src={captcha} alt="captcha" style={{width: '175px'}}/>
+            }
+            {
+                captcha &&
+                <div>
+                    <Field
+                        name="captcha"
+                        component={Input}
+                        type="text"
+                        label="Captcha"
+                        className={s.input}
+                        validate={[required]}
+                    />
+                </div>
+            }
             <div>
                 <Button>Submit</Button>
             </div>
@@ -64,10 +83,10 @@ const LoginReduxForm = reduxForm<FormDataType, {}>({
 
 const LoginPage = () => {
     const dispatch = useDispatch();
-    const isAuth = useSelector((state: RootState) => state.authReducer.isAuth)
+    const isAuth = useSelector(getIsAuth);
 
     const onSubmit = (formData: FormDataType) => {
-        dispatch(loginTC(formData.login, formData.password, formData.rememberMe))
+        dispatch(loginTC(formData.login, formData.password, formData.rememberMe, formData.captcha))
     }
 
     if (isAuth) {

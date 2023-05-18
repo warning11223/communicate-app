@@ -1,7 +1,7 @@
-import {getAuthMeAPI, loginAPI, logoutAPI} from '../../api/api';
-import {AppThunk} from '../reduxStore';
+import {AppThunk} from '../../reduxStore';
 import {stopSubmit} from 'redux-form';
-import {setLoadingAC} from './profileReducer';
+import {setLoadingAC} from '../profile/profileReducer';
+import {networkAPI} from '../../../api/api';
 
 type LoadingType = 'idle' | 'loading' | 'error' | 'succeeded'
 
@@ -11,16 +11,18 @@ export type InitialAuthStateType = {
     login: null | string
     isAuth: null | boolean
     loading: LoadingType
+    captcha?: string
 }
 
-export type AuthReducerActionsType = AuthACType | LogoutACType | SetAuthLoadingACType
+export type AuthReducerActionsType = AuthACType | LogoutACType | SetAuthLoadingACType | SetCaptchaType
 
 export const initialState: InitialAuthStateType = {
     email: null,
     id: null,
     login: null,
     isAuth: false,
-    loading: 'idle'
+    loading: 'idle',
+    captcha: ''
 }
 
 export const authReducer = (state = initialState, action: AuthReducerActionsType): InitialAuthStateType => {
@@ -31,6 +33,8 @@ export const authReducer = (state = initialState, action: AuthReducerActionsType
             return {...action.payload, loading: 'succeeded'}
         case 'SET_LOADING':
             return {...state, loading: action.payload.value}
+        case 'SET_CAPTCHA':
+            return {...state, captcha: action.payload.captcha}
         default:
             return state;
     }
@@ -39,6 +43,7 @@ export const authReducer = (state = initialState, action: AuthReducerActionsType
 type AuthACType = ReturnType<typeof authAC>;
 type LogoutACType = ReturnType<typeof logoutAC>;
 type SetAuthLoadingACType = ReturnType<typeof setAuthLoadingAC>;
+type SetCaptchaType = ReturnType<typeof setCaptcha>;
 
 export const authAC = (email: string, id: number, login: string) => ({
     type: 'GET_AUTH', payload: {email, id, login}
@@ -52,14 +57,21 @@ export const setAuthLoadingAC = (value: LoadingType) => ({
     type: 'SET_LOADING', payload: { value }
 } as const)
 
-export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunk => async (dispatch) => {
+export const setCaptcha = (captcha: string) => ({
+    type: 'SET_CAPTCHA', payload: { captcha }
+} as const)
+
+export const loginTC = (email: string, password: string, rememberMe: boolean, captcha: string): AppThunk => async (dispatch) => {
     dispatch(setAuthLoadingAC('loading'))
-    const res = await loginAPI(email, password, rememberMe)
+    const res = await networkAPI.loginAPI(email, password, rememberMe, captcha)
     dispatch(setAuthLoadingAC('succeeded'))
 
     if (res.resultCode === 0) {
         dispatch(getAuthMeThunk())
     } else {
+        if (res.resultCode === 10) {
+            dispatch(getCaptchaThunk())
+        }
         const message = res.messages.length > 0 ? res.messages[0] : 'Some error occurred';
 
         dispatch(stopSubmit('login', {_error: message}))
@@ -68,7 +80,7 @@ export const loginTC = (email: string, password: string, rememberMe: boolean): A
 
 export const logoutTC = (): AppThunk => async (dispatch) => {
     dispatch(setAuthLoadingAC('loading'))
-    const res = await logoutAPI()
+    const res = await networkAPI.logoutAPI()
     dispatch(setAuthLoadingAC('succeeded'));
 
     if (res.resultCode === 0) {
@@ -79,7 +91,7 @@ export const logoutTC = (): AppThunk => async (dispatch) => {
 export const getAuthMeThunk = (): AppThunk => async (dispatch) => {
     dispatch(setLoadingAC(true));
 
-    const res = await getAuthMeAPI()
+    const res = await networkAPI.getAuthMeAPI()
 
     dispatch(setLoadingAC(false));
     const {id, email, login} = res;
@@ -87,4 +99,14 @@ export const getAuthMeThunk = (): AppThunk => async (dispatch) => {
     if (email && id && login) {
         dispatch(authAC(email, id, login));
     }
+}
+
+export const getCaptchaThunk = (): AppThunk => async (dispatch) => {
+    dispatch(setLoadingAC(true))
+
+    const res = await networkAPI.getCaptcha()
+    dispatch(setCaptcha(res.data.url))
+
+    dispatch(setLoadingAC(false))
+
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {UserType} from '../../redux/reducers/usersReducer';
+import {UserType} from '../../redux/reducers/users/usersReducer';
 import s from './Users.module.css'
 import Preloader from '../common/Preloader/Preloader';
 import {Paginator} from '../common/Paginator/Paginator';

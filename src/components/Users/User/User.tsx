@@ -2,7 +2,7 @@ import React from 'react';
 import s from './User.module.css';
 import {Link} from 'react-router-dom';
 import user_avatar from '../../../assets/img/user-avatar.png';
-import {UserType} from '../../../redux/reducers/usersReducer';
+import {UserType} from '../../../redux/reducers/users/usersReducer';
 
 type UserPropsType = {
     item: UserType

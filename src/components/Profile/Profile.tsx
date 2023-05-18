@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from 'react';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
-import {ProfileStateType} from '../../redux/reducers/profileReducer';
+import {ProfileStateType} from '../../redux/reducers/profile/profileReducer';
 import Preloader from '../common/Preloader/Preloader';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import ProfileStatus from './ProfileStatus/ProfileStatus';
@@ -35,6 +35,7 @@ const Profile: React.FC<ProfileProps> = ({state, setUserStatusThunk, setPhotoThu
                 : <div className={s.content}>
                     <div className={s.leftContent}>
                         <img className={s.avatar} src={state.photos.large ? state.photos.large : image} alt="avatar"/>
+                        <ProfileStatus status={state.status} changeStatus={onChangeHandler}/>
                         {
                             isOwner &&
                             <div className={s.uploadContainer}>
@@ -48,7 +49,6 @@ const Profile: React.FC<ProfileProps> = ({state, setUserStatusThunk, setPhotoThu
                     </div>
                     <div className={s.rightContent}>
                         <ProfileInfo state={state}/>
-                        <ProfileStatus status={state.status} changeStatus={onChangeHandler}/>
                     </div>
 
                 </div>
