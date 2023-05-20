@@ -7,13 +7,14 @@ type ButtonPropsType = {
     callback?: () => void
     authData?: InitialAuthStateType
     children: React.ReactNode
+    type?: 'button' | 'submit'
 }
 
-export const Button: React.FC<ButtonPropsType> = ({authData, callback, children}) => {
+export const Button: React.FC<ButtonPropsType> = ({authData, callback, children, type}) => {
     return (
         <div>
             <div className={s.wrapper}>
-                <button className={s.button} onClick={callback}>
+                <button className={s.button} onClick={callback} type={type}>
                     {children}
                     <span></span>
                     <span></span>

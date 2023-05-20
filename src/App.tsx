@@ -1,6 +1,6 @@
 import React, {lazy} from 'react';
 import Navigation from './components/Navigation/Navigation';
-import {Route} from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 import Greetings from './components/Greetings/Greetings';
 import HeaderContainer from './components/Header/HeaderContainer';
 import LoginPage from './components/LoginPage/LoginPage';
@@ -53,7 +53,7 @@ class App extends React.Component<AppProps> {
                             <Preloader/>
                         </div>
                         :
-                        <>
+                        <Switch>
                             <Route path="/" exact component={() => <Greetings/>}/>
                             <Route path="/profile/:userID?" component={ProfileContainerWithSuspense}/>
                             <Route path="/dialogs" component={DialogsContainerWithSuspense}/>
@@ -64,8 +64,8 @@ class App extends React.Component<AppProps> {
                             <Route path="/settings" component={() => <Settings/>}/>
                             <Route path="/page-404" component={() => <Page404/>}/>
 
-                            {/*<Route path="*" location={new Location()}/>*/}
-                        </>
+                            <Route path="*" component={() => <Redirect to={"/page-404"}/>} />
+                        </Switch>
                 }
             </div>
         );

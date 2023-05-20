@@ -48,7 +48,7 @@ const Profile: React.FC<ProfileProps> = ({state, setUserStatusThunk, setPhotoThu
                         <MyPostsContainer/>
                     </div>
                     <div className={s.rightContent}>
-                        <ProfileInfo state={state}/>
+                        <ProfileInfo state={state} isOwner={isOwner}/>
                     </div>
 
                 </div>

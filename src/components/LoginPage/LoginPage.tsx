@@ -24,7 +24,7 @@ const minLength3 = minLength(3)
 let LoginForm = (props: InjectedFormProps<FormDataType>) => {
     const captcha = useAppSelector(getCaptcha)
     const {handleSubmit} = props;
-    console.log(captcha)
+
     return (
         <form onSubmit={handleSubmit} className={s.form}>
             <div>

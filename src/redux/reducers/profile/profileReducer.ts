@@ -156,7 +156,9 @@ export const setProfileThunk = (properties: ProfileProps, id: string): AppThunk 
     dispatch(setLoadingAC(true))
 
     const res1 = await networkAPI.setProfile(properties)
-    const res2 = await getUserProfileThunk(id)
+    const res2 = await networkAPI.getUserProfileAPI(id)
+
+    dispatch(updateUserProfileAC(res2.data))
 
     dispatch(setLoadingAC(false))
 }

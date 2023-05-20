@@ -103,6 +103,7 @@ export type ProfileProps = {
     userId: number
     lookingForAJob: boolean
     lookingForAJobDescription: string
+    aboutMe: string
     fullName: string
     contacts: {
         github: string
