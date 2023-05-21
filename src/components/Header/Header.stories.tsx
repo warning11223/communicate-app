@@ -13,7 +13,8 @@ const state: InitialAuthStateType = {
     login: 'test',
     email: 'test@mail.ru',
     isAuth: false,
-    loading: 'idle'
+    loading: 'idle',
+    error: ''
 }
 
 const Template: ComponentStory<typeof Header> = () => <Header authData={state}  />;

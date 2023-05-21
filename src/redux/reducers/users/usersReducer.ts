@@ -1,6 +1,7 @@
 import {AppThunk} from '../../reduxStore';
 import {getStatusAC, setStatusAC} from '../profile/profileReducer';
 import {networkAPI} from '../../../api/api';
+import {setAuthErrorAC, setAuthLoadingAC} from '../auth/authReducer';
 
 export type UsersReducerActionsType =
     FollowUserACType
@@ -9,7 +10,8 @@ export type UsersReducerActionsType =
     | SetCurrentPageType
     | SetTotalUsersCountType
     | SetLoadingACType
-    | SetFollowingUserType;
+    | SetFollowingUserType
+    | SetUsersErrorType
 
 export type UserType = {
     name: string
@@ -25,7 +27,7 @@ export type UserType = {
 
 export type UsersStateType = {
     items: UserType[]
-    error: string | null
+    error: string
     pageSize: number
     totalUsersCount: number
     currentPage: number
@@ -68,6 +70,8 @@ export const usersReducer = (state = initialState, action: UsersReducerActionsTy
                 ...state,
                 followingInProgress: action.payload.value ? [...state.followingInProgress, action.payload.id] : state.followingInProgress.filter(item => item !== action.payload.id)
             };
+        case 'SET_USERS_ERROR':
+            return {...state, error: action.payload.error};
         default:
             return state;
     }
@@ -80,6 +84,7 @@ export type SetCurrentPageType = ReturnType<typeof setCurrentPageAC>;
 export type SetTotalUsersCountType = ReturnType<typeof setTotalUsersCountAC>;
 export type SetLoadingACType = ReturnType<typeof setLoadingAC>;
 export type SetFollowingUserType = ReturnType<typeof setFollowingUserAC>;
+export type SetUsersErrorType = ReturnType<typeof setUsersError>;
 
 export const followUserAC = (id: number) => ({
     type: 'FOLLOW', payload: {id}
@@ -109,49 +114,107 @@ export const setFollowingUserAC = (value: boolean, id: number) => ({
     type: 'SET_FOLLOWING', payload: {value, id}
 } as const)
 
-export const getUsersThunk = (pageSize: number, index: number): AppThunk => async (dispatch) => {
-    dispatch(setLoadingAC(true));
+export const setUsersError = (error: string) => ({
+    type: 'SET_USERS_ERROR', payload: {error}
+} as const)
 
-    const res = await networkAPI.getUsersAPI(pageSize, index + 1)
-    dispatch(setUsersAC(res.items));
-    dispatch(setTotalUsersCountAC(res.totalCount))
-    dispatch(setLoadingAC(false));
+export const getUsersThunk = (pageSize: number, index: number): AppThunk => async (dispatch) => {
+    try {
+        dispatch(setLoadingAC(true));
+
+        const res = await networkAPI.getUsersAPI(pageSize, index + 1)
+        dispatch(setUsersAC(res.items));
+        dispatch(setTotalUsersCountAC(res.totalCount))
+        dispatch(setLoadingAC(false));
+    } catch ({message}) {
+        if (typeof message === 'string') {
+            dispatch(setUsersError(message))
+            dispatch(setLoadingAC(false));
+
+            setTimeout(() => {
+                dispatch(setUsersError(''))
+            }, 1000)
+        }
+    }
 }
 
 export const followUserThunk = (id: number): AppThunk => async (dispatch) => {
-    dispatch(setFollowingUserAC(true, id));
+    try {
+        dispatch(setFollowingUserAC(true, id));
 
-    const res = await networkAPI.followUserAPI(id)
-    if (res.resultCode === 0) {
-        dispatch(followUserAC(id));
+        const res = await networkAPI.followUserAPI(id)
+        if (res.resultCode === 0) {
+            dispatch(followUserAC(id));
+        }
+        dispatch(setFollowingUserAC(false, id));
+    } catch ({message}) {
+        if (typeof message === 'string') {
+            dispatch(setUsersError(message))
+            dispatch(setFollowingUserAC(false, id));
+
+            setTimeout(() => {
+                dispatch(setUsersError(''))
+            }, 1000)
+        }
     }
-    dispatch(setFollowingUserAC(false, id));
 }
 
 export const unFollowUserThunk = (id: number): AppThunk => async (dispatch) => {
-    dispatch(setFollowingUserAC(true, id));
+    try {
+        dispatch(setFollowingUserAC(true, id));
 
-    const res = await networkAPI.unFollowUserAPI(id)
-    if (res.resultCode === 0) {
-        dispatch(unfollowUserAC(id));
+        const res = await networkAPI.unFollowUserAPI(id)
+        if (res.resultCode === 0) {
+            dispatch(unfollowUserAC(id));
+        }
+        dispatch(setFollowingUserAC(false, id));
+    } catch ({message}) {
+        if (typeof message === 'string') {
+            dispatch(setUsersError(message))
+
+            setTimeout(() => {
+                dispatch(setUsersError(''))
+            }, 1000)
+        }
     }
-    dispatch(setFollowingUserAC(false, id));
 }
 
 export const getUserStatusThunk = (userId: string | number): AppThunk => async (dispatch) => {
-    dispatch(setLoadingAC(true));
+    try {
+        dispatch(setLoadingAC(true));
 
-    const res = await networkAPI.getUserStatusAPI(userId)
-    dispatch(setLoadingAC(false));
-    dispatch(getStatusAC(res));
+        const res = await networkAPI.getUserStatusAPI(userId)
+        dispatch(setLoadingAC(false));
+        dispatch(getStatusAC(res));
+    } catch ({message}) {
+        if (typeof message === 'string') {
+            dispatch(setUsersError(message))
+            dispatch(setLoadingAC(false));
+
+            setTimeout(() => {
+                dispatch(setUsersError(''))
+            }, 1000)
+        }
+    }
 }
 
 export const setUserStatusThunk = (status: string): AppThunk => async (dispatch) => {
-    dispatch(setLoadingAC(true));
+    try {
+        dispatch(setLoadingAC(true));
 
-    const res = await networkAPI.setUserStatusAPI(status)
-    dispatch(setLoadingAC(false));
-    if (res.resultCode === 0) {
-        dispatch(setStatusAC(status));
+        const res = await networkAPI.setUserStatusAPI(status)
+        dispatch(setLoadingAC(false));
+        if (res.resultCode === 0) {
+            dispatch(setStatusAC(status));
+        }
+    } catch ({message}) {
+        if (typeof message === 'string') {
+            dispatch(setUsersError(message))
+            dispatch(setLoadingAC(false));
+
+            setTimeout(() => {
+                dispatch(setUsersError(''))
+            }, 1000)
+        }
     }
 }

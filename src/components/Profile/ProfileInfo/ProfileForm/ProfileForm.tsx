@@ -8,23 +8,6 @@ import {useAppDispatch} from '../../../../redux/reduxStore';
 import {setProfileThunk} from '../../../../redux/reducers/profile/profileReducer';
 import React from 'react';
 
-
-type Inputs = {
-    name: string
-    aboutMe: string
-    lookingForAJob: boolean
-    facebook: string
-    website: string
-    vk: string
-    twitter: string
-    instagram: string
-    youtube: string
-    github: string
-    mainLink: string
-    lookingForAJobDescription: string
-};
-
-
 const URL = /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
 
 const schema = yup.object({
@@ -124,6 +107,21 @@ type Props = {
     userId: number | string
     setEditable: (value: boolean) => void
 }
+
+type Inputs = {
+    name: string
+    aboutMe: string
+    lookingForAJob: boolean
+    facebook: string
+    website: string
+    vk: string
+    twitter: string
+    instagram: string
+    youtube: string
+    github: string
+    mainLink: string
+    lookingForAJobDescription: string
+};
 
 type FormData = yup.InferType<typeof schema>;
 

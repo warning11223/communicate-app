@@ -1,7 +1,7 @@
 import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import {Input, maxLength, minLength, required} from '../common/FormControls/FormControls';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {loginTC} from '../../redux/reducers/auth/authReducer';
 import {Redirect} from 'react-router-dom';
 import {useAppSelector} from '../../redux/reduxStore';
@@ -10,6 +10,7 @@ import {getCaptcha, getIsAuth} from '../../redux/reducers/auth/auth.selectors';
 
 import s from './LoginPage.module.css'
 
+
 type FormDataType = {
     login: string
     password: string
@@ -17,7 +18,7 @@ type FormDataType = {
     captcha: string
 }
 
-const maxLength30 = maxLength(30);
+const maxLength30 = maxLength(30)
 const minLength2 = minLength(2)
 const minLength3 = minLength(3)
 
@@ -83,7 +84,8 @@ const LoginReduxForm = reduxForm<FormDataType, {}>({
 
 const LoginPage = () => {
     const dispatch = useDispatch();
-    const isAuth = useSelector(getIsAuth);
+    const isAuth = useAppSelector(getIsAuth);
+
 
     const onSubmit = (formData: FormDataType) => {
         dispatch(loginTC(formData.login, formData.password, formData.rememberMe, formData.captcha))

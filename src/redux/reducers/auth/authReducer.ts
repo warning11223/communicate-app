@@ -12,9 +12,10 @@ export type InitialAuthStateType = {
     isAuth: null | boolean
     loading: LoadingType
     captcha?: string
+    error: string
 }
 
-export type AuthReducerActionsType = AuthACType | LogoutACType | SetAuthLoadingACType | SetCaptchaType
+export type AuthReducerActionsType = AuthACType | LogoutACType | SetAuthLoadingACType | SetCaptchaType | SetAuthErrorType
 
 export const initialState: InitialAuthStateType = {
     email: null,
@@ -22,7 +23,8 @@ export const initialState: InitialAuthStateType = {
     login: null,
     isAuth: false,
     loading: 'idle',
-    captcha: ''
+    captcha: '',
+    error: ''
 }
 
 export const authReducer = (state = initialState, action: AuthReducerActionsType): InitialAuthStateType => {
@@ -30,11 +32,13 @@ export const authReducer = (state = initialState, action: AuthReducerActionsType
         case 'GET_AUTH':
             return {...state, isAuth: true, loading: 'succeeded', ...action.payload}
         case 'LOGOUT':
-            return {...action.payload, loading: 'succeeded'}
+            return {...action.payload, loading: 'succeeded', error: ''}
         case 'SET_LOADING':
             return {...state, loading: action.payload.value}
         case 'SET_CAPTCHA':
             return {...state, captcha: action.payload.captcha}
+        case 'SET_AUTH_ERROR':
+            return {...state, error: action.payload.error}
         default:
             return state;
     }
@@ -43,7 +47,8 @@ export const authReducer = (state = initialState, action: AuthReducerActionsType
 type AuthACType = ReturnType<typeof authAC>;
 type LogoutACType = ReturnType<typeof logoutAC>;
 type SetAuthLoadingACType = ReturnType<typeof setAuthLoadingAC>;
-type SetCaptchaType = ReturnType<typeof setCaptcha>;
+type SetCaptchaType = ReturnType<typeof setCaptchaAC>;
+type SetAuthErrorType = ReturnType<typeof setAuthErrorAC>;
 
 export const authAC = (email: string, id: number, login: string) => ({
     type: 'GET_AUTH', payload: {email, id, login}
@@ -57,56 +62,103 @@ export const setAuthLoadingAC = (value: LoadingType) => ({
     type: 'SET_LOADING', payload: { value }
 } as const)
 
-export const setCaptcha = (captcha: string) => ({
+export const setCaptchaAC = (captcha: string) => ({
     type: 'SET_CAPTCHA', payload: { captcha }
 } as const)
 
+export const setAuthErrorAC = (error: string) => ({
+    type: 'SET_AUTH_ERROR', payload: { error }
+} as const)
+
 export const loginTC = (email: string, password: string, rememberMe: boolean, captcha: string): AppThunk => async (dispatch) => {
-    dispatch(setAuthLoadingAC('loading'))
-    const res = await networkAPI.loginAPI(email, password, rememberMe, captcha)
-    dispatch(setAuthLoadingAC('succeeded'))
+    try {
+        dispatch(setAuthLoadingAC('loading'))
+        const res = await networkAPI.loginAPI(email, password, rememberMe, captcha)
+        dispatch(setAuthLoadingAC('succeeded'))
 
-    if (res.resultCode === 0) {
-        dispatch(getAuthMeThunk())
-    } else {
-        if (res.resultCode === 10) {
-            dispatch(getCaptchaThunk())
+        if (res.resultCode === 0) {
+            dispatch(getAuthMeThunk())
+        } else {
+            if (res.resultCode === 10) {
+                dispatch(getCaptchaThunk())
+            }
+            const message = res.messages.length > 0 ? res.messages[0] : 'Some error occurred'
+
+            dispatch(stopSubmit('login', {_error: message}))
         }
-        const message = res.messages.length > 0 ? res.messages[0] : 'Some error occurred';
+    } catch ({ message }) {
+        if (typeof message === 'string') dispatch(setAuthErrorAC(message))
+        dispatch(setAuthLoadingAC('error'))
 
-        dispatch(stopSubmit('login', {_error: message}))
+        setTimeout(() => {
+            dispatch(setAuthErrorAC(''))
+        }, 1000)
     }
 }
 
 export const logoutTC = (): AppThunk => async (dispatch) => {
-    dispatch(setAuthLoadingAC('loading'))
-    const res = await networkAPI.logoutAPI()
-    dispatch(setAuthLoadingAC('succeeded'));
+    try {
+        dispatch(setAuthLoadingAC('loading'))
+        const res = await networkAPI.logoutAPI()
+        dispatch(setAuthLoadingAC('succeeded'));
 
-    if (res.resultCode === 0) {
-        dispatch(logoutAC(null, null, null, false))
+        if (res.resultCode === 0) {
+            dispatch(logoutAC(null, null, null, false))
+        }
+    } catch ({ message }) {
+        if (typeof message === 'string') {
+            dispatch(setAuthErrorAC(message))
+            dispatch(setAuthLoadingAC('error'))
+            dispatch(setLoadingAC(false))
+
+            setTimeout(() => {
+                dispatch(setAuthErrorAC(''))
+            }, 1000)
+        }
     }
 }
 
 export const getAuthMeThunk = (): AppThunk => async (dispatch) => {
-    dispatch(setLoadingAC(true));
+    try {
+        dispatch(setLoadingAC(true));
 
-    const res = await networkAPI.getAuthMeAPI()
+        const res = await networkAPI.getAuthMeAPI()
 
-    dispatch(setLoadingAC(false));
-    const {id, email, login} = res;
+        dispatch(setLoadingAC(false));
+        const {id, email, login} = res;
 
-    if (email && id && login) {
-        dispatch(authAC(email, id, login));
+        if (email && id && login) {
+            dispatch(authAC(email, id, login));
+        }
+    } catch ({ message }) {
+        if (typeof message === 'string') {
+            dispatch(setAuthErrorAC(message))
+            dispatch(setAuthLoadingAC('error'));
+
+            setTimeout(() => {
+                dispatch(setAuthErrorAC(''))
+            }, 1000)
+        }
     }
 }
 
 export const getCaptchaThunk = (): AppThunk => async (dispatch) => {
-    dispatch(setLoadingAC(true))
+    try {
+        dispatch(setLoadingAC(true))
 
-    const res = await networkAPI.getCaptcha()
-    dispatch(setCaptcha(res.data.url))
+        const res = await networkAPI.getCaptcha()
+        dispatch(setCaptchaAC(res.data.url))
 
-    dispatch(setLoadingAC(false))
+        dispatch(setLoadingAC(false))
+    } catch ({ message }) {
+        if (typeof message === 'string') {
+            dispatch(setAuthErrorAC(message))
+            dispatch(setAuthLoadingAC('error'));
+
+            setTimeout(() => {
+                dispatch(setAuthErrorAC(''))
+            }, 1000)
+        }
+    }
 
 }

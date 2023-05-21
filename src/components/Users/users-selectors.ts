@@ -18,3 +18,6 @@ export const getIsLoading = (state: RootState) => {
 export const getFollowingInProgress = (state: RootState) => {
     return state.usersReducer.followingInProgress
 }
+export const getUsersError = (state: RootState) => {
+    return state.usersReducer.error
+}

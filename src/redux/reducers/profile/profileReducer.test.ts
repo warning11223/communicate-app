@@ -7,7 +7,7 @@ import {
     setStatusAC,
     updateTextAreaAC,
     updateUserProfileAC
-} from '../redux/reducers/profile/profileReducer';
+} from './profileReducer';
 
 let initialState: ProfileStateType;
 
@@ -42,7 +42,8 @@ beforeEach(() => {
             youtube: 'string',
             github: 'string',
             mainLink: 'string'
-        }
+        },
+        error: ''
     };
 })
 

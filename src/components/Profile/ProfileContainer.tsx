@@ -13,8 +13,10 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {GetUserProfileType} from '../../api/api';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
-import {getProfile, getUserId} from './profile-selectors';
+import {getProfile, getProfileError, getUserId} from './profile-selectors';
 import {getUserStatusThunk, setUserStatusThunk } from '../../redux/reducers/users/usersReducer';
+import {getUsersError} from '../Users/users-selectors';
+
 
 type MapDispatchToPropsType = {
     updateUserProfile: (userResponse: GetUserProfileType) => void
@@ -27,6 +29,8 @@ type MapDispatchToPropsType = {
 type MapStateToPropsType = {
     profile: ProfileStateType
     userInfoId: number | null
+    error: string
+    usersError: string
 }
 type PathParamsType = {
     userID: string
@@ -49,6 +53,8 @@ class ProfileContainer extends React.Component<ProfileContainerProps> {
             setUserStatusThunk={this.props.setUserStatusThunk}
             setPhotoThunk={this.props.setPhotoThunk}
             isOwner={!this.props.match.params.userID}
+            error={this.props.error}
+            usersError={this.props.usersError}
         />
     }
 }
@@ -56,7 +62,9 @@ class ProfileContainer extends React.Component<ProfileContainerProps> {
 const mapStateToProps = (state: RootState): MapStateToPropsType => {
     return {
         profile: getProfile(state),
-        userInfoId: getUserId(state)
+        userInfoId: getUserId(state),
+        error: getProfileError(state),
+        usersError: getUsersError(state)
     }
 }
 

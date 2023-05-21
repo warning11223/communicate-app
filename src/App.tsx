@@ -34,15 +34,10 @@ const ProfileContainerWithSuspense = withSuspense(ProfileContainer)
 
 class App extends React.Component<AppProps> {
     componentDidMount() {
-        this.props.initializeAppTC();
-
+        this.props.initializeAppTC()
     }
 
     render() {
-        /*if (!this.props.initialized) {
-            return <Preloader />
-        }*/
-
         return (
             <div className="container">
                 <HeaderContainer/>
@@ -74,7 +69,7 @@ class App extends React.Component<AppProps> {
 
 const mapStateToProps = (state: RootState): MapStateToPropsType => {
     return {
-        initialized: state.appReducer.initialized
+        initialized: state.appReducer.initialized,
     }
 }
 export default connect(mapStateToProps, {initializeAppTC})(App);

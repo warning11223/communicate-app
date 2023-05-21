@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
     usersReducer,
     authReducer,
     appReducer,
-    form: formReducer
+    form: formReducer,
 })
 
 export type RootState = ReturnType<typeof rootReducer>

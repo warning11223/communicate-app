@@ -1,4 +1,4 @@
-import {authAC, authReducer, InitialAuthStateType, loginTC, logoutAC} from '../redux/reducers/auth/authReducer';
+import {authAC, authReducer, InitialAuthStateType, loginTC, logoutAC} from './authReducer';
 
 let initialState: InitialAuthStateType;
 
@@ -8,7 +8,8 @@ beforeEach(() => {
         login: '',
         isAuth: false,
         email: '',
-        loading: 'idle'
+        loading: 'idle',
+        error: ''
     }
 })
 

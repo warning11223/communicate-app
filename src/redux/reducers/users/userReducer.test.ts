@@ -8,7 +8,7 @@ import {
     unfollowUserAC,
     usersReducer,
     UsersStateType
-} from '../redux/reducers/users/usersReducer';
+} from './usersReducer';
 
 let initialState: UsersStateType;
 
@@ -28,7 +28,7 @@ beforeEach(() => {
             },
 
         ],
-        error: null,
+        error: '',
         isLoading: false,
         followingInProgress: [1, 2, 3],
         pageSize: 1,

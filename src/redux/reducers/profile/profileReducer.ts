@@ -29,7 +29,8 @@ const initialState = {
         small: '',
         large: ''
     },
-    status: ''
+    status: '',
+    error: ''
 };
 
 export interface Contacts {
@@ -63,6 +64,7 @@ export type ProfileStateType = ProfileResponseType & {
     posts: PostType[]
     isLoading: boolean
     status: string
+    error: string
 }
 
 export type ProfileReducerActionsType =
@@ -73,6 +75,7 @@ export type ProfileReducerActionsType =
     | GetStatusType
     | SetStatusType
     | SetPhotoType
+    | SetProfileErrorType
 
 export const profileReducer = (state: ProfileStateType = initialState, action: ProfileReducerActionsType): ProfileStateType => {
     switch (action.type) {
@@ -93,7 +96,9 @@ export const profileReducer = (state: ProfileStateType = initialState, action: P
         case 'SET_STATUS':
             return {...state, status: action.payload.status};
         case 'SET_PHOTO':
-            return {...state, photos: action.payload.data}
+            return {...state, photos: action.payload.data};
+        case 'SET_PROFILE_ERROR':
+            return {...state, error: action.payload.error};
         default:
             return state;
     }
@@ -106,6 +111,7 @@ export type SetLoadingType = ReturnType<typeof setLoadingAC>;
 export type GetStatusType = ReturnType<typeof getStatusAC>;
 export type SetStatusType = ReturnType<typeof setStatusAC>;
 export type SetPhotoType = ReturnType<typeof setPhoto>;
+export type SetProfileErrorType = ReturnType<typeof setProfileError>;
 
 export const addPostAC = (post: string) => ({
     type: 'ADD-POST', post
@@ -135,30 +141,66 @@ export const setPhoto = (data: { small: string, large: string }) => ({
     type: 'SET_PHOTO', payload: {data}
 } as const)
 
-export const getUserProfileThunk = (id: string): AppThunk => async (dispatch) => {
-    dispatch(setLoadingAC(true))
+export const setProfileError = (error: string) => ({
+    type: 'SET_PROFILE_ERROR', payload: {error}
+} as const)
 
-    const res = await networkAPI.getUserProfileAPI(id)
-    dispatch(setLoadingAC(false))
-    dispatch(updateUserProfileAC(res.data))
+export const getUserProfileThunk = (id: string): AppThunk => async (dispatch) => {
+    try {
+        dispatch(setLoadingAC(true))
+
+        const res = await networkAPI.getUserProfileAPI(id)
+        dispatch(setLoadingAC(false))
+        dispatch(updateUserProfileAC(res.data))
+    } catch ({message}) {
+        if (typeof message === 'string') {
+            dispatch(setProfileError(message))
+            dispatch(setLoadingAC(false))
+
+            setTimeout(() => {
+                dispatch(setProfileError(''))
+            }, 1000)
+        }
+    }
 }
 
 export const setPhotoThunk = (photo: File): AppThunk => async (dispatch) => {
-    dispatch(setLoadingAC(true))
+    try {
+        dispatch(setLoadingAC(true))
 
-    const res = await networkAPI.setPhotoAPI(photo)
-    dispatch(setLoadingAC(false))
-    dispatch(setPhoto(res))
+        const res = await networkAPI.setPhotoAPI(photo)
+        dispatch(setLoadingAC(false))
+        dispatch(setPhoto(res))
+    } catch ({message}) {
+        if (typeof message === 'string') {
+            dispatch(setProfileError(message))
+            dispatch(setLoadingAC(false))
+
+            setTimeout(() => {
+                dispatch(setProfileError(''))
+            }, 1000)
+        }
+    }
 }
 
-
 export const setProfileThunk = (properties: ProfileProps, id: string): AppThunk => async (dispatch) => {
-    dispatch(setLoadingAC(true))
+    try {
+        dispatch(setLoadingAC(true))
 
-    const res1 = await networkAPI.setProfile(properties)
-    const res2 = await networkAPI.getUserProfileAPI(id)
+        const res1 = await networkAPI.setProfile(properties)
+        const res2 = await networkAPI.getUserProfileAPI(id)
 
-    dispatch(updateUserProfileAC(res2.data))
+        dispatch(updateUserProfileAC(res2.data))
 
-    dispatch(setLoadingAC(false))
+        dispatch(setLoadingAC(false))
+    } catch ({message}) {
+        if (typeof message === 'string') {
+            dispatch(setProfileError(message))
+            dispatch(setLoadingAC(false))
+
+            setTimeout(() => {
+                dispatch(setProfileError(''))
+            }, 1000)
+        }
+    }
 }

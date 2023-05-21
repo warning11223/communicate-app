@@ -8,22 +8,29 @@ import ProfileStatus from './ProfileStatus/ProfileStatus';
 import s from './Profile.module.css'
 import image from '../../assets/img/user-avatar.png'
 import upload from '../../assets/img/up-loading.png'
-
+import {toast} from 'react-toastify';
 
 type ProfileProps = {
     state: ProfileStateType
     setUserStatusThunk: (status: string) => void
     setPhotoThunk: (photo: File) => void
     isOwner: boolean
+    error: string
+    usersError: string
 }
 
-const Profile: React.FC<ProfileProps> = ({state, setUserStatusThunk, setPhotoThunk, isOwner}) => {
+const Profile: React.FC<ProfileProps> = ({state, setUserStatusThunk, setPhotoThunk, isOwner, error, usersError}) => {
     const onChangeHandler = (statusValue: string) => {
         setUserStatusThunk(statusValue);
     }
 
     const onLoadHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setPhotoThunk(e.currentTarget.files![0])
+    }
+
+    if (error || usersError) {
+        if (error) toast.error(error)
+        if (usersError) toast.error(usersError)
     }
 
     return (

@@ -18,7 +18,7 @@ import {
     getIsLoading,
     getPageSize,
     getTotalUsersCount,
-    getUsers
+    getUsers, getUsersError
 } from './users-selectors';
 
 type UsersContainerPropsType = MapStateToPropsType & {
@@ -73,6 +73,7 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
             followingInProgress={this.props.followingInProgress}
             followUserThunk={this.props.followUserThunk}
             unFollowUserThunk={this.props.unFollowUserThunk}
+            error={this.props.error}
         />
     }
 }
@@ -84,6 +85,7 @@ type MapStateToPropsType = {
     pageSize: number
     isLoading: boolean
     followingInProgress: number[]
+    error: string
 }
 
 const mapStateToProps = (state: RootState): MapStateToPropsType => {
@@ -94,7 +96,7 @@ const mapStateToProps = (state: RootState): MapStateToPropsType => {
         pageSize: getPageSize(state),
         isLoading: getIsLoading(state),
         followingInProgress: getFollowingInProgress(state),
-
+        error: getUsersError(state)
     }
 }
 

@@ -1,4 +1,4 @@
-import {addMessageActionCreator, dialogsReducer} from '../redux/reducers/dialogs/dialogsReducer';
+import {addMessageActionCreator, dialogsReducer} from './dialogsReducer';
 
 test('message should be added', () => {
     const initialState = {
