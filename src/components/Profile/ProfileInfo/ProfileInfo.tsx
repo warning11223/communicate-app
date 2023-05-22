@@ -10,7 +10,7 @@ type PropsType = {
     isOwner: boolean
 }
 
-const ProfileInfo: React.FC<PropsType> = ({state, isOwner}) => {
+export const ProfileInfo: React.FC<PropsType> = ({state, isOwner}) => {
     const [editable, setEditable] = useState(false);
 
     return (
@@ -67,5 +67,3 @@ const ProfileInfo: React.FC<PropsType> = ({state, isOwner}) => {
         </div>
     );
 };
-
-export default ProfileInfo;

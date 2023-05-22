@@ -36,9 +36,7 @@ export const networkAPI = {
             .then(res => res.data)
     },
     setUserStatusAPI: (status: string) => {
-        return instance.put<ResponseType<{}>>(`profile/status`, {
-            status
-        })
+        return instance.put<ResponseType<{}>>(`profile/status`, {status})
             .then(res => res.data)
     },
     setPhotoAPI: (image: File) => {

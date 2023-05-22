@@ -1,6 +1,5 @@
 import {ComponentMeta, ComponentStory} from '@storybook/react';
-import Profile from './Profile';
-import {reduxStore} from '../../redux/reduxStore';
+import {Profile} from './Profile';
 
 
 

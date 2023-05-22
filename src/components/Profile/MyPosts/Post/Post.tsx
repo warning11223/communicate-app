@@ -7,7 +7,7 @@ type PostProps = {
     text: string | undefined
 }
 
-const Post: React.FC<PostProps> = ({text}) => {
+export const Post: React.FC<PostProps> = ({text}) => {
     return (
         <div className={s.postContainer}>
             <img className={s.userImage} src={user} alt="user logo"/>
@@ -15,5 +15,3 @@ const Post: React.FC<PostProps> = ({text}) => {
         </div>
     );
 };
-
-export default Post;

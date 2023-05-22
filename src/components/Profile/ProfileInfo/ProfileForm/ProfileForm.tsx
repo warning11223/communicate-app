@@ -3,9 +3,9 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 import s from './ProfileForm.module.css'
-import {Button} from '../../../common/Button/Button';
-import {useAppDispatch} from '../../../../redux/reduxStore';
-import {setProfileThunk} from '../../../../redux/reducers/profile/profileReducer';
+import {Button} from '../../../common';
+import {useAppDispatch} from '../../../../redux';
+import {setProfileThunk} from '../../../../redux';
 import React from 'react';
 
 const URL = /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;

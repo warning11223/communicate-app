@@ -1,5 +1,5 @@
 import {ComponentMeta, ComponentStory} from '@storybook/react';
-import Post from './Post';
+import {Post} from './Post';
 
 
 export default {

@@ -1,26 +1,11 @@
 import React from 'react';
 import {UserType} from '../../redux/reducers/users/usersReducer';
 import s from './Users.module.css'
-import Preloader from '../common/Preloader/Preloader';
-import {Paginator} from '../common/Paginator/Paginator';
+import {Paginator, Preloader} from '../common';
 import {User} from './User/User';
 import {toast} from 'react-toastify';
 
-type UsersPropsType = {
-    users: UserType[]
-    setCurrentPageHandler: (index: number) => void
-    totalUsersCount: number
-    currentPage: number
-    pageSize: number
-    loading: boolean
-    setFollowingUser: (value: boolean, id: number) => void
-    followingInProgress: number[]
-    followUserThunk: (id: number) => void
-    unFollowUserThunk: (id: number) => void
-    error: string
-}
-
-const Users: React.FC<UsersPropsType> = ({
+export const Users: React.FC<UsersPropsType> = ({
                                              totalUsersCount,
                                              users,
                                              currentPage,
@@ -70,4 +55,16 @@ const Users: React.FC<UsersPropsType> = ({
     );
 }
 
-export default Users;
+type UsersPropsType = {
+    users: UserType[]
+    setCurrentPageHandler: (index: number) => void
+    totalUsersCount: number
+    currentPage: number
+    pageSize: number
+    loading: boolean
+    setFollowingUser: (value: boolean, id: number) => void
+    followingInProgress: number[]
+    followUserThunk: (id: number) => void
+    unFollowUserThunk: (id: number) => void
+    error: string
+}

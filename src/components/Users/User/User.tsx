@@ -4,12 +4,6 @@ import {Link} from 'react-router-dom';
 import user_avatar from '../../../assets/img/user-avatar.png';
 import {UserType} from '../../../redux/reducers/users/usersReducer';
 
-type UserPropsType = {
-    item: UserType
-    followUserHandler: (id: number) => void
-    unFollowUserHandler: (id: number) => void
-    followingInProgress: number[]
-}
 
 export const User: React.FC<UserPropsType> = ({followUserHandler, unFollowUserHandler, item, followingInProgress}) => {
     return (
@@ -50,3 +44,10 @@ export const User: React.FC<UserPropsType> = ({followUserHandler, unFollowUserHa
         </div>
     );
 };
+
+type UserPropsType = {
+    item: UserType
+    followUserHandler: (id: number) => void
+    unFollowUserHandler: (id: number) => void
+    followingInProgress: number[]
+}

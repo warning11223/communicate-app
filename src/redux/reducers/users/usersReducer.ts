@@ -1,7 +1,6 @@
 import {AppThunk} from '../../reduxStore';
 import {getStatusAC, setStatusAC} from '../profile/profileReducer';
 import {networkAPI} from '../../../api/api';
-import {setAuthErrorAC, setAuthLoadingAC} from '../auth/authReducer';
 
 export type UsersReducerActionsType =
     FollowUserACType

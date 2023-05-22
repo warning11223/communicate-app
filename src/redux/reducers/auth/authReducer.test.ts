@@ -1,4 +1,4 @@
-import {authAC, authReducer, InitialAuthStateType, loginTC, logoutAC} from './authReducer';
+import {authAC, authReducer, InitialAuthStateType, logoutAC} from './authReducer';
 
 let initialState: InitialAuthStateType;
 

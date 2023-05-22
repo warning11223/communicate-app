@@ -8,7 +8,7 @@ type DialogItemProps = {
     name: string
 }
 
-const DialogsItem: React.FC<DialogItemProps> = ({number, name}) => {
+export const DialogsItem: React.FC<DialogItemProps> = ({number, name}) => {
     const pathname = useLocation().pathname[9]
 
     return (
@@ -18,4 +18,3 @@ const DialogsItem: React.FC<DialogItemProps> = ({number, name}) => {
     );
 };
 
-export default DialogsItem;

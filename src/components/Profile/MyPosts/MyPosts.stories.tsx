@@ -1,6 +1,6 @@
 import {ComponentMeta, ComponentStory} from '@storybook/react';
-import MyPosts from './MyPosts';
-import {store} from '../../../redux/state';
+import {MyPosts} from './MyPosts';
+
 
 
 export default {

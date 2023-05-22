@@ -2,21 +2,14 @@ import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import {Input, maxLength, minLength, required} from '../common/FormControls/FormControls';
 import {useDispatch} from 'react-redux';
-import {loginTC} from '../../redux/reducers/auth/authReducer';
+import {loginTC} from '../../redux';
 import {Redirect} from 'react-router-dom';
-import {useAppSelector} from '../../redux/reduxStore';
-import {Button} from '../common/Button/Button';
-import {getCaptcha, getIsAuth} from '../../redux/reducers/auth/auth.selectors';
+import {useAppSelector} from '../../redux';
+import {Button} from '../common';
+import {getCaptcha, getIsAuth} from '../../redux';
 
 import s from './LoginPage.module.css'
 
-
-type FormDataType = {
-    login: string
-    password: string
-    rememberMe: boolean
-    captcha: string
-}
 
 const maxLength30 = maxLength(30)
 const minLength2 = minLength(2)
@@ -82,7 +75,7 @@ const LoginReduxForm = reduxForm<FormDataType, {}>({
     form: 'login'
 })(LoginForm)
 
-const LoginPage = () => {
+export const LoginPage = () => {
     const dispatch = useDispatch();
     const isAuth = useAppSelector(getIsAuth);
 
@@ -116,4 +109,9 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+type FormDataType = {
+    login: string
+    password: string
+    rememberMe: boolean
+    captcha: string
+}

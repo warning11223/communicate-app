@@ -1,6 +1,6 @@
 import {ComponentMeta, ComponentStory} from '@storybook/react';
-import Header from './Header';
 import {InitialAuthStateType} from '../../redux/reducers/auth/authReducer';
+import {Header} from './Header';
 
 
 export default {

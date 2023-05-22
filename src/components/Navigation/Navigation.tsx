@@ -3,7 +3,7 @@ import {Link, useLocation} from 'react-router-dom';
 
 import s from './Navigation.module.css'
 
-const Navigation = () => {
+export const Navigation = () => {
     const pathname = useLocation().pathname
 
     return (
@@ -31,5 +31,3 @@ const Navigation = () => {
         </div>
     );
 };
-
-export default Navigation;

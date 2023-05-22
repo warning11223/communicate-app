@@ -1,20 +1,14 @@
 import React from 'react';
 import {PostType,} from '../../../redux/state';
-import Post from './Post/Post';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import {maxLength, minLength, required, Textarea} from '../../common/FormControls/FormControls';
-import {Button} from '../../common/Button/Button';
-
-type MyPostsProps = {
-    addPostHandler: (post: string) => void
-    posts: PostType[]
-    textarea: string
-}
+import {Button} from '../../common';
+import {Post} from './Post/Post';
 
 const maxLength100 = maxLength(100);
 const minLength2 = minLength(2)
 
-const MyPosts: React.FC<MyPostsProps> = ({ addPostHandler, posts }) => {
+export const MyPosts: React.FC<MyPostsProps> = ({ addPostHandler, posts }) => {
 
     const postsRender = posts.map((item) => {
         return <Post key={item.id} text={item.text}/>
@@ -35,10 +29,6 @@ const MyPosts: React.FC<MyPostsProps> = ({ addPostHandler, posts }) => {
         </div>
     );
 };
-
-type FormDataType = {
-    post: string
-}
 
 const AddPostForm = (props: InjectedFormProps<FormDataType>) => {
     const {handleSubmit} = props;
@@ -66,4 +56,13 @@ const AddPostReduxForm = reduxForm<FormDataType, {}>({
     form: 'post'
 })(AddPostForm)
 
-export default MyPosts;
+type MyPostsProps = {
+    addPostHandler: (post: string) => void
+    posts: PostType[]
+    textarea: string
+}
+
+type FormDataType = {
+    post: string
+}
+

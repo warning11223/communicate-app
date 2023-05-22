@@ -1,0 +1,8 @@
+export {MyPosts} from './MyPosts/MyPosts'
+export {Post} from './MyPosts/Post/Post'
+export {getProfileError, getProfile, getUserId} from './profile-selectors'
+export {Profile} from './Profile'
+export {ProfileInfo} from './ProfileInfo/ProfileInfo'
+export {ProfileForm} from './ProfileInfo/ProfileForm/ProfileForm'
+export {ProfileStatus} from './ProfileStatus/ProfileStatus'
+export {getTextArea, getPosts} from './MyPosts/posts-selectors'

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Vortex} from 'react-loader-spinner';
 
-const Preloader = () => {
+export const Preloader = () => {
     return <Vortex
         visible={true}
         height="120"
@@ -12,5 +12,3 @@ const Preloader = () => {
         colors={['#F51A51', '#F51A51', '#F51A51', '#F51A51', '#F51A51', '#F51A51'   ]}
     />
 };
-
-export default Preloader;

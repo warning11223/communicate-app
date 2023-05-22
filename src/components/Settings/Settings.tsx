@@ -1,7 +1,7 @@
 import React from 'react';
 
 import s from './Settings.module.css'
-import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+import {withAuthRedirect} from '../../hoc';
 
 
 const Settings = () => {

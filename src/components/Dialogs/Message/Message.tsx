@@ -4,10 +4,9 @@ type MessageProps = {
     name: string
 }
 
-const Message: React.FC<MessageProps> = ({name}) => {
+export const Message: React.FC<MessageProps> = ({name}) => {
     return (
         <div>{name}</div>
     );
 };
 
-export default Message;

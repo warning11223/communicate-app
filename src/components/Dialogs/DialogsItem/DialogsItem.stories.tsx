@@ -1,6 +1,5 @@
 import {ComponentMeta, ComponentStory} from '@storybook/react';
-import DialogsItem from './DialogsItem';
-import {MemoryRouter} from 'react-router-dom';
+import {DialogsItem} from './DialogsItem';
 
 
 export default {

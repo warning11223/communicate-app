@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Profile from './Profile';
 import {
     getUserProfileThunk,
     ProfileStateType,
@@ -11,31 +10,12 @@ import {
 import {RootState} from '../../redux/reduxStore';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {GetUserProfileType} from '../../api/api';
-import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+import {withAuthRedirect} from '../../hoc';
 import {compose} from 'redux';
 import {getProfile, getProfileError, getUserId} from './profile-selectors';
-import {getUserStatusThunk, setUserStatusThunk } from '../../redux/reducers/users/usersReducer';
-import {getUsersError} from '../Users/users-selectors';
-
-
-type MapDispatchToPropsType = {
-    updateUserProfile: (userResponse: GetUserProfileType) => void
-    setLoading: (value: boolean) => void
-    getUserProfileThunk: (id: string) => void
-    getUserStatusThunk: (userId: string | number) => void
-    setUserStatusThunk: (status: string) => void
-    setPhotoThunk: (photo: File) => void
-}
-type MapStateToPropsType = {
-    profile: ProfileStateType
-    userInfoId: number | null
-    error: string
-    usersError: string
-}
-type PathParamsType = {
-    userID: string
-}
-type ProfileContainerProps = RouteComponentProps<PathParamsType> & MapDispatchToPropsType & MapStateToPropsType
+import {getUserStatusThunk, setUserStatusThunk } from '../../redux';
+import {getUsersError} from '../Users';
+import {Profile} from './Profile';
 
 class ProfileContainer extends React.Component<ProfileContainerProps> {
     componentDidMount() {
@@ -76,6 +56,25 @@ const mapDispatchToProps: MapDispatchToPropsType = {
     setUserStatusThunk,
     setPhotoThunk
 }
+
+type MapDispatchToPropsType = {
+    updateUserProfile: (userResponse: GetUserProfileType) => void
+    setLoading: (value: boolean) => void
+    getUserProfileThunk: (id: string) => void
+    getUserStatusThunk: (userId: string | number) => void
+    setUserStatusThunk: (status: string) => void
+    setPhotoThunk: (photo: File) => void
+}
+type MapStateToPropsType = {
+    profile: ProfileStateType
+    userInfoId: number | null
+    error: string
+    usersError: string
+}
+type PathParamsType = {
+    userID: string
+}
+type ProfileContainerProps = RouteComponentProps<PathParamsType> & MapDispatchToPropsType & MapStateToPropsType
 
 //export default withAuthRedirect(connect(mapStateToProps, mapDispatchToProps)(withRouter(ProfileContainer)));
 export default compose<React.ComponentType>(

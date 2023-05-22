@@ -2,12 +2,14 @@ import React from 'react';
 
 import s from './Greetings.module.css'
 import {useSelector} from 'react-redux';
-import {RootState} from '../../redux/reduxStore';
-import Preloader from '../common/Preloader/Preloader';
+import {useAppSelector} from '../../redux';
+import {getAuthLoading, getIsAuth, getIsLogin} from '../../redux';
+import {Preloader} from '../common';
 
-const Greetings = () => {
-    const {login, isAuth} = useSelector((state: RootState) => state.authReducer);
-    const loading = useSelector((state: RootState) => state.authReducer.loading);
+export const Greetings = () => {
+    const login = useAppSelector(getIsLogin);
+    const isAuth = useAppSelector(getIsAuth)
+    const loading = useSelector(getAuthLoading);
 
     if (loading === 'loading') {
         return (
@@ -31,5 +33,3 @@ const Greetings = () => {
         </div>
     );
 };
-
-export default Greetings;

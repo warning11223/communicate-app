@@ -4,16 +4,16 @@ import {InitialAuthStateType, logoutTC, setAuthErrorAC} from '../../redux/reduce
 import {useDispatch} from 'react-redux';
 
 import s from './Header.module.css'
-import {Button} from '../common/Button/Button';
-import {useAppSelector} from '../../redux/reduxStore';
+import {Button} from '../common';
+import {useAppSelector} from '../../redux';
 import {toast} from 'react-toastify';
-import {getError} from '../../redux/reducers/auth/auth.selectors';
+import {getError} from '../../redux';
 
 type HeaderType = {
     authData: InitialAuthStateType
 }
 
-const Header: React.FC<HeaderType> = ({authData}) => {
+export const Header: React.FC<HeaderType> = ({authData}) => {
     const dispatch = useDispatch();
     const err = useAppSelector(getError);
 
@@ -52,4 +52,3 @@ const Header: React.FC<HeaderType> = ({authData}) => {
     );
 };
 
-export default Header;

@@ -1,19 +1,19 @@
 import React, {lazy} from 'react';
-import Navigation from './components/Navigation/Navigation';
 import {Redirect, Route, Switch} from 'react-router-dom';
-import Greetings from './components/Greetings/Greetings';
 import HeaderContainer from './components/Header/HeaderContainer';
-import LoginPage from './components/LoginPage/LoginPage';
-import News from './components/News/News';
-import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import {connect} from 'react-redux';
 import {RootState} from './redux/reduxStore';
-import {initializeAppTC} from './redux/reducers/app/appReducer';
-import Preloader from './components/common/Preloader/Preloader';
+import {initializeAppTC} from './redux';
 import './App.css';
-import {withSuspense} from './common/withSuspense';
-import {Page404} from './components/Page404/Page404';
+import {withSuspense} from './common';
+import {Page404} from './components/Page404';
+import {Preloader} from './components/common';
+import {Navigation} from './components/Navigation';
+import {Greetings} from './components/Greetings';
+import {LoginPage} from './components/LoginPage';
+import {News} from './components/News';
+import {Music} from './components/Music';
 
 const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'))
 const UsersContainer = lazy(() => import('./components/Users/UsersContainer'))

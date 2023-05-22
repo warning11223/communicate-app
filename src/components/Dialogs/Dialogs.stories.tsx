@@ -1,6 +1,6 @@
 import {ComponentMeta, ComponentStory} from '@storybook/react';
-import Dialogs from './Dialogs';
 import {store} from '../../redux/state';
+import {Dialogs} from './Dialogs';
 
 
 export default {

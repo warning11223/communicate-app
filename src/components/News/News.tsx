@@ -2,7 +2,7 @@ import React from 'react';
 
 import s from './News.module.css'
 
-const News = () => {
+export const News = () => {
     return (
         <div className={s.wrapper}>
             <h2>Engineering works 🤷</h2>
@@ -10,4 +10,3 @@ const News = () => {
     );
 };
 
-export default News;

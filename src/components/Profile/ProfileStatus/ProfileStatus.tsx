@@ -2,12 +2,7 @@ import React, {useState} from 'react';
 
 import s from './ProfileStatus.module.css'
 
-type PropsType = {
-    status: string
-    changeStatus: (statusValue: string) => void
-}
-
-const ProfileStatus: React.FC<PropsType> = ({status, changeStatus}) => {
+export const ProfileStatus: React.FC<PropsType> = ({status, changeStatus}) => {
     const [editable, setEditable] = useState(false);
     const [value, setValue] = useState(status);
 
@@ -37,4 +32,8 @@ const ProfileStatus: React.FC<PropsType> = ({status, changeStatus}) => {
     );
 };
 
-export default ProfileStatus;
+type PropsType = {
+    status: string
+    changeStatus: (statusValue: string) => void
+}
+

@@ -3,16 +3,6 @@ import {connect} from 'react-redux';
 import {RootState} from '../redux/reduxStore';
 import {Redirect} from 'react-router-dom';
 
-type MapStateToPropsType = {
-    isAuth: boolean | null
-}
-
-const mapStateToProps = (state: RootState): MapStateToPropsType => {
-    return {
-        isAuth: state.authReducer.isAuth
-    }
-}
-
 export function withAuthRedirect<T>(Component: ComponentType<T>) {
 
     const RedirectComponent = (props: MapStateToPropsType) => {
@@ -28,4 +18,14 @@ export function withAuthRedirect<T>(Component: ComponentType<T>) {
 
     let ConnectedRedirectComponent = connect(mapStateToProps)(RedirectComponent);
     return ConnectedRedirectComponent;
+}
+
+type MapStateToPropsType = {
+    isAuth: boolean | null
+}
+
+const mapStateToProps = (state: RootState): MapStateToPropsType => {
+    return {
+        isAuth: state.authReducer.isAuth
+    }
 }

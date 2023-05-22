@@ -1,25 +1,16 @@
 import React, {ChangeEvent} from 'react';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import {ProfileStateType} from '../../redux/reducers/profile/profileReducer';
-import Preloader from '../common/Preloader/Preloader';
-import ProfileInfo from './ProfileInfo/ProfileInfo';
-import ProfileStatus from './ProfileStatus/ProfileStatus';
 
 import s from './Profile.module.css'
 import image from '../../assets/img/user-avatar.png'
 import upload from '../../assets/img/up-loading.png'
 import {toast} from 'react-toastify';
+import {Preloader} from '../common';
+import {ProfileStatus} from './ProfileStatus/ProfileStatus';
+import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 
-type ProfileProps = {
-    state: ProfileStateType
-    setUserStatusThunk: (status: string) => void
-    setPhotoThunk: (photo: File) => void
-    isOwner: boolean
-    error: string
-    usersError: string
-}
-
-const Profile: React.FC<ProfileProps> = ({state, setUserStatusThunk, setPhotoThunk, isOwner, error, usersError}) => {
+export const Profile: React.FC<ProfileProps> = ({state, setUserStatusThunk, setPhotoThunk, isOwner, error, usersError}) => {
     const onChangeHandler = (statusValue: string) => {
         setUserStatusThunk(statusValue);
     }
@@ -65,4 +56,11 @@ const Profile: React.FC<ProfileProps> = ({state, setUserStatusThunk, setPhotoThu
     );
 };
 
-export default Profile;
+type ProfileProps = {
+    state: ProfileStateType
+    setUserStatusThunk: (status: string) => void
+    setPhotoThunk: (photo: File) => void
+    isOwner: boolean
+    error: string
+    usersError: string
+}

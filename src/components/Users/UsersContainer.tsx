@@ -1,5 +1,4 @@
 import React from 'react';
-import Users from './Users';
 import {connect} from 'react-redux';
 import {RootState} from '../../redux/reduxStore';
 import {
@@ -20,6 +19,66 @@ import {
     getTotalUsersCount,
     getUsers, getUsersError
 } from './users-selectors';
+import {Users} from './Users';
+
+class UsersContainer extends React.Component<UsersContainerPropsType> {
+    componentDidMount() {
+        this.props.getUsersThunk(5, 1);
+    }
+
+    setCurrentPageHandler = (index: number) => {
+        this.props.setCurrentPage(index + 1);
+        this.props.getUsersThunk(this.props.pageSize, index + 1);
+    }
+
+    render() {
+        return <Users
+            users={this.props.users}
+            totalUsersCount={this.props.totalUsersCount}
+            currentPage={this.props.currentPage}
+            pageSize={this.props.pageSize}
+            setCurrentPageHandler={this.setCurrentPageHandler}
+            loading={this.props.isLoading}
+            setFollowingUser={this.props.setFollowingUser}
+            followingInProgress={this.props.followingInProgress}
+            followUserThunk={this.props.followUserThunk}
+            unFollowUserThunk={this.props.unFollowUserThunk}
+            error={this.props.error}
+        />
+    }
+}
+
+const mapStateToProps = (state: RootState): MapStateToPropsType => {
+    return {
+        users: getUsers(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: geCurrentPage(state),
+        pageSize: getPageSize(state),
+        isLoading: getIsLoading(state),
+        followingInProgress: getFollowingInProgress(state),
+        error: getUsersError(state)
+    }
+}
+
+const mapDispatchToPropsObj = {
+    setCurrentPage: setCurrentPageAC,
+    setTotalUsersCount: setTotalUsersCountAC,
+    setLoading: setLoadingAC,
+    setFollowingUser: setFollowingUserAC,
+    getUsersThunk,
+    followUserThunk,
+    unFollowUserThunk
+}
+
+type MapStateToPropsType = {
+    users: UserType[]
+    totalUsersCount: number
+    currentPage: number
+    pageSize: number
+    isLoading: boolean
+    followingInProgress: number[]
+    error: string
+}
 
 type UsersContainerPropsType = MapStateToPropsType & {
     setCurrentPage: (currentPage: number) => void
@@ -49,65 +108,6 @@ export interface UsersResponseType {
     items: any
     totalCount: number
     error?: null | string
-}
-
-class UsersContainer extends React.Component<UsersContainerPropsType> {
-    componentDidMount() {
-        this.props.getUsersThunk(5, 1);
-    }
-
-    setCurrentPageHandler = (index: number) => {
-        this.props.setCurrentPage(index + 1);
-        this.props.getUsersThunk(this.props.pageSize, index + 1);
-    }
-
-    render() {
-        return <Users
-            users={this.props.users}
-            totalUsersCount={this.props.totalUsersCount}
-            currentPage={this.props.currentPage}
-            pageSize={this.props.pageSize}
-            setCurrentPageHandler={this.setCurrentPageHandler}
-            loading={this.props.isLoading}
-            setFollowingUser={this.props.setFollowingUser}
-            followingInProgress={this.props.followingInProgress}
-            followUserThunk={this.props.followUserThunk}
-            unFollowUserThunk={this.props.unFollowUserThunk}
-            error={this.props.error}
-        />
-    }
-}
-
-type MapStateToPropsType = {
-    users: UserType[]
-    totalUsersCount: number
-    currentPage: number
-    pageSize: number
-    isLoading: boolean
-    followingInProgress: number[]
-    error: string
-}
-
-const mapStateToProps = (state: RootState): MapStateToPropsType => {
-    return {
-        users: getUsers(state),
-        totalUsersCount: getTotalUsersCount(state),
-        currentPage: geCurrentPage(state),
-        pageSize: getPageSize(state),
-        isLoading: getIsLoading(state),
-        followingInProgress: getFollowingInProgress(state),
-        error: getUsersError(state)
-    }
-}
-
-const mapDispatchToPropsObj = {
-    setCurrentPage: setCurrentPageAC,
-    setTotalUsersCount: setTotalUsersCountAC,
-    setLoading: setLoadingAC,
-    setFollowingUser: setFollowingUserAC,
-    getUsersThunk,
-    followUserThunk,
-    unFollowUserThunk
 }
 
 export default connect(mapStateToProps, mapDispatchToPropsObj)(UsersContainer);
