@@ -1,7 +1,7 @@
 {
   "name": "samurai-way",
   "version": "0.1.0",
-  "homepage": "https://warning11223.github.io/samurai-way",
+  "homepage": "https://warning11223.github.io/communicate-app",
   "private": true,
   "resolutions": {
     "caniuse-lite": "*"
