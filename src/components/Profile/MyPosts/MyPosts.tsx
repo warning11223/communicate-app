@@ -5,6 +5,8 @@ import {maxLength, minLength, required, Textarea} from '../../common/FormControl
 import {Button} from '../../common';
 import {Post} from './Post/Post';
 
+import s from './MyPosts.module.css'
+
 const maxLength100 = maxLength(100);
 const minLength2 = minLength(2)
 
@@ -34,7 +36,7 @@ const AddPostForm = (props: InjectedFormProps<FormDataType>) => {
     const {handleSubmit} = props;
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={s.postsForm}>
             <div>
                 <Field
                     name="post"

@@ -3,8 +3,8 @@
 }
 .content {
     max-width: 1200px;
-    background-color: #182636;
-    height: 100%;
+    background-color: transparent;
+   /* height: 100%;*/
     padding-top: 20px;
     display: flex;
     justify-content: flex-start;

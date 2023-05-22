@@ -28,13 +28,13 @@ export const Dialogs: React.FC<DialogsProps> = ({dialogs, addMessageHandler, mes
 
     return (
         <div className={s.container}>
-            <ul>
+            <div className={s.messagesContainer}>
+                {messagesRender}
+            </div>
+            <ul className={s.dialogsContainer}>
                 {dialogsRender}
             </ul>
-            <div>
-                {messagesRender}
-                <AddMessageReduxForm onSubmit={addMessage}/>
-            </div>
+            <AddMessageReduxForm onSubmit={addMessage}/>
         </div>
     );
 };

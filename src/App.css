@@ -47,8 +47,11 @@
   grid-template-columns: 2fr 10fr;
   grid-gap: 0px 20px;
   background-color: #182636;
-  /*height: 100vh;*/
+  height: 100vh;
 }
 .main {
   grid-area: main;
+}
+body {
+  background-color: #182636;
 }
