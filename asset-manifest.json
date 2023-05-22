@@ -1,29 +1,29 @@
 {
   "files": {
-    "main.css": "/samurai-way/static/css/main.e09a1a02.css",
-    "main.js": "/samurai-way/static/js/main.990e5498.js",
-    "static/css/351.c2233092.chunk.css": "/samurai-way/static/css/351.c2233092.chunk.css",
-    "static/js/351.a339c25f.chunk.js": "/samurai-way/static/js/351.a339c25f.chunk.js",
-    "static/css/732.7a99ae81.chunk.css": "/samurai-way/static/css/732.7a99ae81.chunk.css",
-    "static/js/732.001a4174.chunk.js": "/samurai-way/static/js/732.001a4174.chunk.js",
-    "static/css/37.766efff2.chunk.css": "/samurai-way/static/css/37.766efff2.chunk.css",
-    "static/js/37.5d5c8515.chunk.js": "/samurai-way/static/js/37.5d5c8515.chunk.js",
-    "static/js/533.ecfc0a2e.chunk.js": "/samurai-way/static/js/533.ecfc0a2e.chunk.js",
-    "static/media/user.png": "/samurai-way/static/media/user.e582e4ba7aae2cecd658.png",
-    "static/media/404.png": "/samurai-way/static/media/404.fab8ad695e2026cc86b8.png",
-    "index.html": "/samurai-way/index.html",
-    "main.e09a1a02.css.map": "/samurai-way/static/css/main.e09a1a02.css.map",
-    "main.990e5498.js.map": "/samurai-way/static/js/main.990e5498.js.map",
-    "351.c2233092.chunk.css.map": "/samurai-way/static/css/351.c2233092.chunk.css.map",
-    "351.a339c25f.chunk.js.map": "/samurai-way/static/js/351.a339c25f.chunk.js.map",
-    "732.7a99ae81.chunk.css.map": "/samurai-way/static/css/732.7a99ae81.chunk.css.map",
-    "732.001a4174.chunk.js.map": "/samurai-way/static/js/732.001a4174.chunk.js.map",
-    "37.766efff2.chunk.css.map": "/samurai-way/static/css/37.766efff2.chunk.css.map",
-    "37.5d5c8515.chunk.js.map": "/samurai-way/static/js/37.5d5c8515.chunk.js.map",
-    "533.ecfc0a2e.chunk.js.map": "/samurai-way/static/js/533.ecfc0a2e.chunk.js.map"
+    "main.css": "/communicate-app/static/css/main.e09a1a02.css",
+    "main.js": "/communicate-app/static/js/main.8e840d82.js",
+    "static/css/351.c2233092.chunk.css": "/communicate-app/static/css/351.c2233092.chunk.css",
+    "static/js/351.a339c25f.chunk.js": "/communicate-app/static/js/351.a339c25f.chunk.js",
+    "static/css/732.7a99ae81.chunk.css": "/communicate-app/static/css/732.7a99ae81.chunk.css",
+    "static/js/732.001a4174.chunk.js": "/communicate-app/static/js/732.001a4174.chunk.js",
+    "static/css/37.766efff2.chunk.css": "/communicate-app/static/css/37.766efff2.chunk.css",
+    "static/js/37.5d5c8515.chunk.js": "/communicate-app/static/js/37.5d5c8515.chunk.js",
+    "static/js/533.ecfc0a2e.chunk.js": "/communicate-app/static/js/533.ecfc0a2e.chunk.js",
+    "static/media/user.png": "/communicate-app/static/media/user.e582e4ba7aae2cecd658.png",
+    "static/media/404.png": "/communicate-app/static/media/404.fab8ad695e2026cc86b8.png",
+    "index.html": "/communicate-app/index.html",
+    "main.e09a1a02.css.map": "/communicate-app/static/css/main.e09a1a02.css.map",
+    "main.8e840d82.js.map": "/communicate-app/static/js/main.8e840d82.js.map",
+    "351.c2233092.chunk.css.map": "/communicate-app/static/css/351.c2233092.chunk.css.map",
+    "351.a339c25f.chunk.js.map": "/communicate-app/static/js/351.a339c25f.chunk.js.map",
+    "732.7a99ae81.chunk.css.map": "/communicate-app/static/css/732.7a99ae81.chunk.css.map",
+    "732.001a4174.chunk.js.map": "/communicate-app/static/js/732.001a4174.chunk.js.map",
+    "37.766efff2.chunk.css.map": "/communicate-app/static/css/37.766efff2.chunk.css.map",
+    "37.5d5c8515.chunk.js.map": "/communicate-app/static/js/37.5d5c8515.chunk.js.map",
+    "533.ecfc0a2e.chunk.js.map": "/communicate-app/static/js/533.ecfc0a2e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e09a1a02.css",
-    "static/js/main.990e5498.js"
+    "static/js/main.8e840d82.js"
   ]
 }
