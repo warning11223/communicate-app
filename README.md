@@ -1,4 +1,4 @@
-## github pages - https://warning11223.github.io/samurai-way/#/
+## github pages - https://warning11223.github.io/communicate-app/#/
 
 # 🛠 Технологии:
 
