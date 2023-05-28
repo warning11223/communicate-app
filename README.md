@@ -1,6 +1,6 @@
 ## github pages - https://warning11223.github.io/communicate-app/#/
 
-# 🛠 Технологии:
+# 🛠 Technologies:
 
 - **ReactJS**
 - **TypeScript**
